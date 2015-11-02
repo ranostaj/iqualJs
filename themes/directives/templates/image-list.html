@@ -1,0 +1,23 @@
+
+
+<div class="theme-images">
+    <ul class="list  list-group theme-images__list">
+        <li class="list-group-item theme-images__item" ng-repeat="image in ngModel track by $index">
+            <div class="row">
+                <div class="col-lg-2">
+                    <img style="width: 100%; height: 100px;" src="img/themes/s/{{image.image}}" >
+                </div>
+                <div class="col-lg-10">
+                    <textarea class="form-control" ng-model="$parent.ngModel[$index].description"
+                              placeholder="{{ 'INSERT_IMAGE_DESCRIPTION' | translate }}" name="description[]" rows="4" style="height:100px;" >
+                    </textarea>
+                    <button ng-confirm ng-confirm-click="$parent.deleteImage({index: $index, id: image.id})"
+                            class="btn btn-danger m-t-sm pull-right">
+                        <i class="fa fa-trash-o"></i> {{ 'DELETE' | translate }}
+                    </button>
+                </div>
+            </div>
+        </li>
+    </ul>
+
+</div>

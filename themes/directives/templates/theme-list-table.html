@@ -1,0 +1,92 @@
+<div  >
+
+
+    <table width="100%"    st-pipe="ctrl.loadData" st-table="ctrl.themes"  class="table-bordered table-data theme-table table-striped table table-hover">
+        <tr>
+            <th width="300" translate>TITLE</th>
+            <th class="text-center" translate>PROJECT</th>
+            <th class="text-center" translate>RESPONDENTS</th>
+            <th class="text-center" translate>CREATED</th>
+            <th class="text-center" translate>ACTIVE</th>
+            <th class="text-center" translate>ENTER</th>
+            <th class="text-center" translate>EDIT</th>
+            <th class="text-center" translate  width="50">REMOVE</th>
+        </tr>
+        <tr>
+            <th><input st-search="'Theme.name'" class="form-control" placeholder="{{ 'SEARCH_USER_NAME' | translate}}" /></th>
+
+
+            <th>
+                <select st-search="'project_id'" class="form-control" >
+                    <option value="">-- {{ 'PROJECT'| translate}} --</option>
+                    <option ng-repeat="project in ctrl.projects" value="{{project.id}}">{{project.name}}</option>
+                </select>
+            </th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+
+        </tr>
+        <tbody>
+            <tr ng-repeat="theme  in ctrl.themes">
+                <td >
+                    <strong class="theme-name">
+                        <a ui-sref="admin.theme.view({id:theme.Theme.id})">{{theme.Theme.name}}</a>
+                    </strong>
+                </td >
+                <td  class="text-center">{{theme.Project.name}}</td>
+                <td  class="text-center">{{theme.Theme.respondents}}</td>
+                <td class="text-center">{{theme.Theme.created}}</td>
+                <td class="text-center"   >
+                    <switch change="ctrl.changeActive(model, theme.Theme.id)" model="theme.Theme.active"></switch>
+                </td>
+                <td class="text-center"><a class="btn btn-success btn-xs" ui-sref="theme.view({id:theme.Theme.id})">
+                        {{ 'ENTER' | translate }} <i class="fa fa-angle-right"></i>
+                    </a></td>
+
+                <td class="text-center"><a class="btn btn-info btn-xs" ui-sref="admin.theme.view({id:theme.Theme.id})">
+                        {{ 'EDIT' | translate }} <i class="fa fa-pencil"></i>
+                    </a></td>
+
+                <td class="text-center">
+                    <a  ng-confirm
+                        ng-confirm-message="{{ 'REALLY_DELETE_TOPIC' | translate }}?"
+                        ng-confirm-description="{{theme.Theme.name}}"
+                        ng-confirm-click="ctrl.deleteRow(theme.Theme.id)"  class="btn  btn-xs    btn-danger ">
+                        <i class="fa fa-trash-o"></i>
+                    </a>
+                </td>
+            </tr>
+        </tbody>
+
+        <tfoot>
+
+            <tr>
+
+                <td colspan="7">
+                    <div class="panel-footer clearfix">
+                        <div class="pull-left m-r-md">
+
+                            <select ng-model="ctrl.onPage">
+                                <option ng-repeat="page in ctrl.pages">{{page}}</option>
+                            </select>
+                        </div>
+
+                        <div class="pull-left text-sm m-t-xs ">
+                            {{ctrl.table.start}} - {{ctrl.table.number}}  of {{ ctrl.table.total}} total
+                        </div>
+                        <div class="pull-left m-l-lg text-center" ng-show="ctrl.isLoading">
+                            <img src="files/svg-loaders/three-dots.svg"   /><strong>Loading data ...</strong>
+                        </div>
+                        <div class="text-right pull-right" st-pagination  st-items-by-page="ctrl.onPage"  ></div>
+
+                    </div>
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+</div>
+

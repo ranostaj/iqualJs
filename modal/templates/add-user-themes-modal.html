@@ -1,0 +1,51 @@
+
+<div class="modal-header">
+    <h3 class="modal-title" translate>
+        ADD_RESPONDENT_INTO_TOPIC
+    </h3>
+</div>
+<div class="modal-body">
+
+    <table width="100%" class="table-bordered table table-hover" ng-show="themes.Theme">
+        <tr>
+            <th translate>TOPIC_NAME</th>
+            <th width="200" translate >NUMBER_OF_RESPONDENTS</th>
+            <th width="100" translate>ACTIVE</th>
+            <th width="100" translate>ADD</th>
+        </tr>
+        <tr ng-repeat="theme  in themes.Theme">
+            <td>{{theme.name}}</td>
+            <td align="center" class="text-center">{{theme.respondents}}</td>
+            <td ><switch change="changeActive(model, theme)" model="theme.active"></switch></td>
+            <td>
+                <button ng-show="!theme.add" class="btn btn-default btn-xs" ng-click="add( theme )" translate>ADD</button>
+                <button ng-show="theme.add" class="btn btn-success btn-xs" ng-click="remove( theme )" translate>CANCEL</button>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="4">
+                <button ng-show="!addedThemes.length" class="btn btn-success b pull-right"  ng-click="all()">
+                    <i class="fa fa-plus"></i>
+                    {{ 'ALL' | translate }}
+                </button>
+                <button ng-show="addedThemes.length" class="btn btn-danger pull-right"  ng-click="all()">
+                    <i class="fa fa-minus"></i>
+                    {{ 'CANCEL' | translate }}
+                </button>
+            </td>
+        </tr>
+    </table>
+
+    <div class="alert alert-warning" ng-show="!themes.Theme">
+        <p> <i class="fa fa-info"></i>  {{ 'NO_TOPICS_CREATED' | translate }}
+            <a ui-sref="admin.theme.add" class="btn btn-primary"><i class="fa fa-plus"></i> {{ 'ADD_TOPIC' | translate }}</a>
+        </p>
+    </div>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-danger" ng-click="cancel()"><i class="fa fa-times"></i>  {{ 'CLOSE' | translate }}</button>
+    <button ng-show="addedThemes.length" class="btn btn-success" ng-click="ok()"><i class="fa fa-save"></i>
+
+        {{ 'SAVE' | translate }}
+    </button>
+</div>

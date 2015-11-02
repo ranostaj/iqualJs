@@ -1,0 +1,341 @@
+
+
+
+<button type="submit" ng-click="saveProject()" ng-disabled="projectForm.$invalid" class="btn m-b-md btn-info pull-right">
+    <i class="fa fa-save"></i> {{ 'SAVE_PROJECT' | translate }}
+</button>
+<div class="alert wrapper-sm alert-warning pull-right animated fadeInLeft m-r-md" ng-if="user_added">
+    <i class="fa fa-warning"></i>
+    {{ 'SAVE_PROJECT_FOR_CHANGES' | translate }}
+</div>
+
+<div class="clear"></div>
+
+<section class="panel panel-default">
+    <header class="panel-heading project-add-heading bg-light">
+        <tabset class='pull-right'>
+            <tab select="selectTab('info')" >
+                <tab-heading>
+                    <i class='fa fa-cog'></i> {{ 'BASIC_INFO_AND_SETTINGS' | translate }}
+                </tab-heading>
+            </tab>
+
+            <tab select="selectTab('themes')" >
+                <tab-heading>
+                    <i class='fa fa-flask'></i> {{ 'TOPICS' | translate }} ({{formData.Theme.length}})
+                </tab-heading>
+            </tab>
+
+
+            <tab select="selectTab('users')">
+                <tab-heading>
+                    <i class="fa fa-user"></i> {{ 'USERS' | translate }} ({{formData.User.length}})
+                </tab-heading>
+            </tab>
+
+            <tab select="selectTab('mail')">
+                <tab-heading>
+                    <i class="fa fa-envelope"></i> {{ 'MASSMAIL' | translate }}
+                </tab-heading>
+            </tab>
+
+        </tabset>
+        <h3 class="panel-title  m-b-none" ng-show="formData.Project.id"><i class="fa fa-pencil"></i>
+            {{ 'EDIT' | translate}} {{ 'PROJECT' | translate}} -
+            <span class="text-success">[{{formData.Project.name}}]</span>
+        </h3>
+    </header>
+
+    <div class="panel-body clearfix">
+        <div class="tab-content ">
+            <div class="tab-pane clearfix" ng-class="{'active': tabs.info}" >
+                <form  enctype="multipart/form-data"   name="projectForm"  ng-submit="saveProject()" role="form"  >
+                    <div class="row">
+
+                        <div class="col-md-6">
+
+                            <div class="panel-body">
+
+                                <div class="form-group">
+                                    <h3 class="font-thin"><i class="fa fa-info"></i>
+                                        {{ 'PROJECT_INFO' | translate }}
+
+                                    </h3>
+                                </div>
+
+                                <div class="form-group">
+                                    <label> {{ 'PROJECT_NAME' | translate }}</label>
+                                    <input type="text" ng-model="formData.Project.name" required class="form-control"  />
+                                </div>
+                                <div class="form-group">
+                                    <label>{{ 'PROJECT_DESCRIPTION' | translate }}</label>
+
+                                    <div   text-angular ta-toolbar-button-class="btn btn-default btn-sm"
+                                           ta-toolbar="[['h1','h2','h3', 'p'],['bold','italics', 'underline', 'ul', 'ol'], ['justifyLeft', 'justifyCenter', 'justifyRight',  'insertLink']]"
+                                           ng-model="formData.Project.description"  >
+
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="col-md-6">
+                            <div class="panel-body">
+                                <div class="form-group">
+                                    <h3 class="font-thin"><i class="fa fa-cog"></i> {{ "PROJECT_SETTINGS" | translate }} </h3>
+
+                                </div>
+                                <div class="form-group">
+                                    <h4 class="font-thin"><i class="fa fa-power-off p-5 text-white"
+                                                             ng-class="{'bg-danger text-white ' : formData.Project.active != 1, 'bg-success' : formData.Project.active == 1  }"></i>  {{ 'STATUS' | translate }}
+                                    </h4>
+                                    <div class="btn-group btn-group-xs">
+                                        <label class="btn btn-xs btn-default" ng-change="changeActive( 1, formData )" ng-class="{'btn-success' : formData.Project.active == 1  }" ng-model="formData.Project.active" btn-radio='1'>{{ 'ACTIVE' | translate }}</label>
+                                        <label class="btn btn-xs btn-default" ng-change="changeActive( 0, formData )" ng-class="{'btn-danger' :  formData.Project.active == 0 }" ng-model="formData.Project.active" btn-radio='0'>{{ 'INACTIVE' | translate }}</label>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <h4 class="font-thin">
+                                        {{ 'ALLOW_YOUTUBE_PHOTO' | translate }}
+
+                                    </h4>
+
+                                    <div class="btn-group btn-group-xs">
+                                        <label class="btn btn-xs" ng-class="{'btn-success' : formData.Project.youtube == 1, 'btn-default': formData.Project.youtube == 0  }" ng-model="formData.Project.youtube" btn-checkbox>Youtube</label>
+                                        <label class="btn btn-xs" ng-class="{'btn-success' : formData.Project.image == 1, 'btn-default' :  formData.Project.image == 0  }" ng-model="formData.Project.image" btn-checkbox>Foto upload</label>
+                                    </div>
+                                </div>
+
+
+                                <div class="line line-dashed line-lg pull-in"></div>
+                                <div class="form-group">
+                                    <h4 class="font-thin"><i class="fa fa-info"></i>
+                                        {{ 'CONTACT_DETAILS' | translate }}
+
+                                    </h4>
+                                </div>
+                                <div class="form-group">
+                                    <label translate >RESEARCHER_NAME</label>
+                                    <input type="text" ng-model="formData.Project.uname" placeholder=" {{ 'RESEARCHER_NAME' | translate }}" required class="form-control"  />
+                                </div>
+
+                                <div class="form-group">
+                                    <label>E-mail  <span class="text-muted"> ({{ 'EMAIL_CONTACT_INFO' | translate }} )</span></label>
+                                    <input type="email" ng-model="formData.Project.email" placeholder="E-mail" required class="form-control"  />
+                                </div>
+
+                                <div class="form-group">
+                                    <label>{{ 'PHONE_CONTACT' | translate }}  <span class="text-muted">({{ 'EMAIL_CONTACT_INFO' | translate }})</span></label>
+                                    <input type="text" ng-model="formData.Project.phone" placeholder="{{ 'PHONE_CONTACT' | translate }}" required class="form-control"  />
+                                </div>
+
+
+
+                            </div>
+
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+            <div class="tab-pane" ng-class="{'active': tabs.users}" >
+
+                <div class="row">
+                    <div class="col-md-6">
+
+                        <form name="addUserForm" class="form  clearfix" ng-submit="addUser()">
+                            <div class="form-group">
+                                <h4 class="font-thin"><i class="fa fa-plus"></i> {{ 'ADD_USER' | translate }}</h5>
+                            </div>
+                            <div class="form-group row">
+
+                                <div class="col-sm-5">
+                                    <input class="form-control" exists-in-project  project="formData.Project.id" required type="email" ng-model="addUserFormData.username" name="username" placeholder="{{ 'USER_EMAIL' | translate }}" />
+                                    <span ng-show="addUserForm.username.$error.email" class="error form-error help-block"><i class="fa fa-warning"></i>
+                                        {{ "INVALID_EMAIL" | translate }}
+
+                                    </span>
+
+                                    <span ng-show="addUserForm.username.$valid" class="form-ok help-block"><fa class="fa fa-check-circle"></fa> OK</span>
+
+                                    <span ng-show="addUserForm.username.$error.existsInProject && addUserForm.$dirty" class="error form-error help-block">
+                                        <i class="fa fa-warning"></i>
+                                        {{ "USER_EXISTS_IN_PROJECT" | translate }}
+
+                                    </span>
+
+                                </div>
+                                <div class="col-sm-5">
+                                    <input class="form-control" required type="text" name="name"  ng-model="addUserFormData.name"   placeholder="{{ 'FULL_NAME' | translate }}" />
+                                    <span ng-show="addUserForm.name.$error.required && !addUserForm.name.$pristine" class="error form-error help-block">
+                                        <i class="fa fa-warning"></i>
+                                        {{ 'ENTER_FULL_NAME' | translate }}
+
+                                    </span>
+                                    <span ng-show="addUserForm.name.$valid" class="form-ok help-block"><fa class="fa fa-check-circle"></fa> OK</span>
+
+                                </div>
+                                <div class="col-sm-2">
+                                    <button class="btn btn-primary"
+                                            ng-show="addUserForm.$valid"
+                                            type="submit"><i class="fa fa-plus"></i> {{ "ADD" | translate }}</button>
+
+                                    <button class="btn btn-danger btn-sm" ng-click="clearForm( $event )"
+                                            ng-show="addUserForm.$dirty && addUserForm.$invalid && addUserForm.name.$valid"
+                                            type="submit"><i class="fa fa-plus"></i> {{ "CANCEL" | translate }}
+                                    </button>
+
+                                </div>
+
+                            </div>
+
+                            <div class="form-group clearfix row">
+                                <div class="col-lg-12">
+                                    <label class="font-bold">{{ "USER_TYPE" | translate }}:</label> <br />
+                                    <div class="btn-group btn-group-xs">
+                                        <label class="btn btn-xs" ng-class="{'btn-primary' : addUserFormData.role_id === '3'   }" ng-model="addUserFormData.role_id" btn-radio="'3'">{{ "CLIENT" | translate }}</label>
+                                        <label class="btn btn-xs" ng-class="{'btn-primary' : addUserFormData.role_id === '2'   }" ng-model="addUserFormData.role_id" btn-radio="'2'">{{ "RESPONDENT" | translate }}</label>
+                                    </div>
+                                </div>
+
+
+                            </div>
+                            <div class="form-group row" ng-show="showUserProjectsTable">
+                                <div class="col-sm-12">
+                                    <div user-projects project-id="formData.Project.id" user-username="addUserFormData.username">
+                                        <div message  text="{{ 'USER_EXISTS_IN_PROJECTS' | translate }}:"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <div class="col-sm-12">
+                                    <span class="help-block text-muted"><i class="fa fa-info-circle"></i>
+
+                                        {{ 'EMAIL_PASSWORD_SEND' | translate }}
+
+                                    </span>
+                                </div>
+                            </div>
+
+                        </form>
+
+
+
+
+                    </div>
+
+                    <!--        <section  class="panel panel-default">
+                                <header class="panel-heading">
+                                    <h5 class="panel-title"><i class="fa fa-upload"></i> Upload respodentov cez CSV</h5>
+                                </header>
+                                <section class="panel-body">
+                                    <div class="form-group">
+                                        <input type="file"
+                                               id="file"
+                                               ng-file-select="selectFiles($files)"
+                                               class="filestyle" data-icon="false"
+                                               />
+
+                                    </div>
+                                </section>
+                            </section>-->
+
+
+
+                    <div class='col-md-6'>
+                        <section ng-show="formData.User.length">
+                            <div class="form-group clearfix">
+                                <h4 class="font-thin pull-left"><i class="fa fa-list"></i>    {{ 'USERS_LIST' | translate }} ({{formData.User.length}})</h5>
+
+                                    <div class="form-group btn-group btn-group-sm pull-right m-b-none">
+
+                                        <button ng-click="filterUsers( '2' )"
+                                                class="btn btn-default btn-xs   "
+                                                ng-class="{'active':filters.user_role.role_id == '2'}">
+                                            {{ 'RESPONDENTS' | translate }}
+                                        </button>
+
+                                        <button ng-click="filterUsers( '3' )"
+                                                class="btn btn-default  btn-xs  "
+                                                ng-class="{'active':filters.user_role.role_id == '3'}">
+                                            {{ 'KLIENTS' | translate }}
+                                        </button>
+                                        <button ng-click="filterUsers( 'all' )"
+                                                class="btn btn-default  btn-xs"
+                                                ng-class="{'active':!filters.user_role}" >
+                                            {{ 'ALL_USERS' | translate }}
+
+                                        </button>
+
+
+                                    </div>
+                            </div>
+                            <div class="m-b-md" slim-scroll="{height:'400px'}">
+
+                                <ul class="list-group alt">
+                                    <li  class="list-group-item" ng-repeat="resp in formData.User | filter: filters.user_role">
+                                        <div class="media">
+                                            <span ng-if="resp.pictogram_id" class="pull-left  thumb-sm">
+                                                <img src="img/avatars/icon-{{resp.pictogram_id}}.png" class="img-circle" alt="">
+                                            </span>
+
+                                            <div class="media-body pull-left">
+                                                <a href="javascript:void(null)" view-user-details user-id="{{resp.id}}">
+                                                    <span ng-class="{
+                                                                'text-danger':resp.status === 'error'
+                                                                }">{{resp.name}}
+                                                        <br />
+
+                                                        <span class="text-muted text-sm">
+                                                            {{resp.username}}
+                                                        </span></span>
+                                                </a>
+
+                                                <span ng-show="resp.status" class="label"
+                                                      ng-class="{'label-success':resp.status === 'success', 'label-danger':resp.status === 'error'}">
+                                                    <span ng-show="resp.status === 'success'">OK!</span>
+                                                    <span ng-show="resp.status === 'error'">
+
+                                                        {{ 'THIS_USER_EXISTS' | translate }}
+                                                    </span>
+                                                </span>
+                                            </div>
+
+                                            <a ng-confirm ng-confirm-click="delRow(resp.id, 'user')" class="btn btn-xs pull-right  btn-danger">
+                                                <i class="fa fa-trash-o"></i>   {{ 'DELETE' | translate }}
+                                            </a>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-pane" ng-class="{'active': tabs.themes}" >
+                <a  class="btn btn-primary m-b-md  pull-right" href="javascript:void(null)" add-new-theme project-id="{{formData.Project.id}}" >
+                    <i class="fa fa-flask"></i>  {{ 'ADD_TOPIC' | translate }}
+                </a>
+                <div class="clear"></div>
+
+                <div ng-if="formData.Project.id" theme-list filters="{ 'project_id': '{{formData.Project.id}}' }" ></div>
+            </div>
+
+            <div class="tab-pane" ng-class="{'active': tabs.mail}" >
+                <users-massmail project="formData.Project.id" users="formData.User"></users-massmail>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+
+
+
+

@@ -1,0 +1,88 @@
+<section class="hbox stretch">
+
+
+    <div class="row">
+        <div class="col-lg-6 animated fadeInUp">
+
+
+
+            <section class="panel panel-default portlet-item">
+                <header class="panel-heading">
+
+                    <h4 class="m-t-none m-b-none" > <i class="fa fa-file-o fa-lg"></i>
+                        {{'ACTUAL_PROJECTS'| translate}}
+                        <span class="badge pull-right">{{home.projects.length}}</span></h4>
+                </header>
+                <section class="panel-body">
+
+                    <div project-list-table filter="{'active':1}" ></div>
+
+                </section>
+            </section>
+
+
+
+            <section class="panel panel-default portlet-item">
+                <header class="panel-heading">
+                    <h4 class="m-t-none m-b-none " ><span class="fa fa-flask fa-lg"></span>
+                        {{ 'TOPICS' | translate }}
+
+                        <span class="badge pull-right">{{home.themes.length}}</span>
+                    </h4>
+                </header>
+                <section class="panel-body"   >
+                    <div theme-list filters="{'active':1}" ></div>
+                </section>
+            </section>
+
+        </div>
+
+        <div class="col-lg-6 animated fadeInUp">
+            <section class="panel panel-default">
+                <header class="panel-heading">
+
+                    <h4 class="m-t-none m-b-none" > <i class="fa fa-comments-o fa-lg"></i>
+                        {{ 'LAST_FORUM_COMMENTS' | translate }}
+
+                        <span class="badge pull-right">{{home.comments.length}}</span>
+                    </h4>
+                </header>
+
+                <section class="panel-body slim-scroll" data-height="400px">
+                    <article class="media"  ng-repeat="comment in home.comments track by $index">
+                        <div class="row">
+
+                            <div class="col-sm-3">
+                                <span class="pull-left thumb-sm m-r-md">
+                                    <div user-image user-data="{{comment.User}}"></div>
+                                </span>
+                                {{comment.User.name}} <br />
+                                <a ui-sref="theme.view({id:comment.Theme.id})">
+                                    <span class="fa fa-flask"></span> {{comment.Theme.name}}
+                                </a>
+                            </div>
+
+                            <div class="col-sm-6">
+                                <small class="block m-t-sm">{{comment.Comment.text}}</small>
+                            </div>
+                            <div class="col-sm-3">
+                                <span  class="text-muted"  time-ago from-time="{{comment.Comment.created}}"></span>
+                            </div>
+                        </div>
+
+
+                        <div class="line pull-in" ng-show="($index + 1) != home.comments.length"></div>
+                    </article>
+
+
+
+
+                </section>
+            </section>
+
+
+        </div>
+
+    </div>
+
+</section>

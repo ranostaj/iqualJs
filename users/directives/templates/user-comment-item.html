@@ -1,0 +1,24 @@
+
+<li class="list-group-item m-t-md    " ng-class="{'bg-light': comment.user_role != 1}">
+    <div class=" ">
+        <div class="pull-left m-r-sm m-b-lg">
+            <button class="btn btn-xs btn-primary  " ng-click="openChild()" ng-if="hasChild">
+                <i class="fa fa-chevron-down" ng-if="icon_down"></i>
+                <i class="fa fa-chevron-up" ng-if="!icon_down"></i>
+            </button>
+        </div>
+
+        <div class="">
+            <span class="text-muted m-l-sm pull-right">
+                <i class="fa fa-clock-o"></i>
+                <span time-ago from-time="{{comment.created}}"></span>
+                ({{comment.created}})
+            </span>
+            <span ng-if="comment.user_role == 1" class="label bg-dark m-l-xs">Admin</span>
+            <strong>  {{comment.name}}</strong> ({{comment.username}})<br />
+            <p class="p-10"><i class="fa fa-comment-o"></i> {{comment.text}}</p>
+            <div class="comment__youtube" youtube code="comment.youtube"></div>
+        </div>
+    </div>
+</li>
+

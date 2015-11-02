@@ -1,0 +1,66 @@
+<form  name="modalForm" ng-submit="ctrl.saveModalForm()" >
+    <div class="modal-header">
+        <h3 class="modal-title"> <i class="fa fa-user"></i> {{ 'CREATE_NEW_ACCOUNT' | translate }}</h3>
+    </div>
+    <div class="modal-body">
+
+
+
+        <div class="alert alert-success" ng-show="ctrl.success">
+            <p><i class="fa fa-check-circle-o"></i> {{ctrl.success}}</p>
+        </div>
+
+        <div ng-if="!ctrl.success">
+            <div class="form-group">
+
+                <input type="text"
+                       ng-model="ctrl.formData.username" unique-user name="username" required   placeholder=" {{ 'ENTER_EMAIL' | translate }}"
+                       class="form-control input-lg">
+
+                <small class="form-error help-block"
+                       ng-show="modalForm.username.$error.unique" translate >
+                    USER_EXISTS
+                </small>
+            </div>
+
+            <div class="form-group">
+
+
+                <input type="text"
+                       ng-model="ctrl.formData.name"     required name="name"   placeholder=" {{ 'ENTER_FULL_NAME' | translate }}"
+                       class="form-control input-lg">
+
+                <small class="form-error help-block"
+                       ng-show="modalForm.name.$error.unique" translate >
+                    ENTER_FULL_NAME
+                </small>
+            </div>
+
+
+            <div class="form-group">
+
+                <input type="password" ng-model="ctrl.formData.password" id="inputPassword"
+                       placeholder="{{'ENTER_PASSWORD'| translate }}" class="form-control input-lg">
+            </div>
+
+            <div class="form-group"   >
+
+                <input id="password_check"  type="password" class="form-control input-lg"  password-verify="ctrl.formData.password"
+                       name="password_check"
+                       ng-model="ctrl.formData.password_check"  placeholder="{{'REPEAT_PASSWORD'| translate }}" />
+                <small class="form-error help-block"
+                       ng-show="modalForm.password_check.$error.passwordVerify && ctrl.formData.password_check" translate>
+                    PASSWORD_DO_NOT_MATCH
+                </small>
+
+
+            </div>
+
+        </div>
+
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" ng-if="!ctrl.success"  ng-disabled="modalForm.$invalid"  translate >SAVE</button>
+        <button class="btn btn-danger" ng-click="ctrl.cancel()" translate>CANCEL</button>
+    </div>
+</form>

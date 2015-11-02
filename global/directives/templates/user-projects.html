@@ -1,0 +1,29 @@
+
+<div ng-transclude ng-show="projects.length"></div>
+
+<table ng-show="projects.length" class="table table-condensed table-striped">
+    <tr>
+        <th translate>PROJECT</th>
+        <th translate>ACTIVE</th>
+        <th translate>ACTION</th>
+    </tr>
+
+    <tr ng-repeat="project in projects track by $index" >
+        <td>{{project.name}}
+            <span class="label label-warning" ng-show="projectId == project.id">
+                &nbsp;<i class="fa fa-warning"></i> {{ 'ACTUAL_PROJECT' | translate }}
+            </span>
+        </td>
+        <td><span status active="{{project.active}}"></span></td>
+        <td>
+            <button ng-click="deleteUser( $event, $index, { user : user.id, project : project.id } )" class="btn btn-xs btn-danger">
+                <i class="fa fa-trash-o"></i>
+                {{ 'REMOVE_FROM_PROJECT' | translate }}
+
+            </button>
+
+
+        </td>
+    </tr>
+
+</table>

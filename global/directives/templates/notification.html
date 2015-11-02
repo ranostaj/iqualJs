@@ -1,0 +1,14 @@
+<div class="notification animated" ng-show="show">
+    <div class="alert"  ng-class="{'alert-success': type == 'success', 'alert-danger': type == 'danger'}" >
+
+        <ul class="list list--alert">
+            <li ng-repeat="message in messages" >
+                <i class="fa fa-check-circle" ng-class="{'fa-check-circle': type, 'fa-exclamation-triangle': type == 'danger'}"></i>
+                <span  ng-bind-html="message"></span>
+
+            </li>
+        </ul>
+
+
+    </div>
+</div>

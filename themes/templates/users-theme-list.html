@@ -1,0 +1,63 @@
+
+<div class="aside-box ">
+
+    <header class="bg-light dk header">
+        <p>{{ 'RESPONDENTS' | translate }} ({{theme.users.length}})</p>
+    </header>
+    <section class="bg-white ">
+        <div class="form-group btn-group">
+
+            <button ng-click="theme.filterUsers( '0' )" ng-class="{'active':theme.state_users.comments == '0'}" class="btn btn-default btn-sm   ">
+                <i class="fa fa-circle text-xs text-danger"></i> &nbsp;&nbsp;{{ 'NO_ANSWER' | translate }}</button>
+
+            <button ng-click="theme.filterUsers( '!0' )" ng-class="{'active':theme.state_users.comments == '!0'}" class="btn btn-default  btn-sm   ">
+                <i class="fa fa-circle text-xs text-success"></i> &nbsp;&nbsp;&nbsp;{{ 'ANSWER' | translate }}</button>
+            <button ng-click="theme.filterUsers( 'all' )" ng-class="{'active':!theme.state_users.comments}" class="btn btn-default  btn-sm   "><i class="fa fa-user"></i>
+                {{ 'ALL_USERS' | translate }}
+            </button>
+
+
+        </div>
+        <div class="list-group list-group-alt no-radius no-borders scrollable" slim-scroll="{height:'300px'}" >
+
+
+
+            <ul class="aside__users-list">
+                <li ng-repeat="user in theme.users | filter: theme.state_users">
+                    <div class="btn-group" ng-class="{'open': theme.selected_comment.id === user.id}" dropdown >
+
+                        <a href="javascript:void(null)" class="user-name dropdown-toggle" ng-class="{'user-selected': theme.selected_comment.id === user.id}">
+                            <i class="fa fa-sort-down"></i>
+                            {{user.name}}
+                            <i class="fa fa-circle text-xs"
+                               ng-class="{'text-success':user.0.comments > 0, 'text-danger':user.0.comments == 0 }"></i>
+                            <span class="text-muted">({{user.0.comments}}x)</span>
+                        </a>
+
+                        <ul class="dropdown-menu dropdown-menu-left" role="menu">
+
+                            <li ng-hide="theme.selected_comment.id && theme.selected_comment.id == user.id">
+                                <a href="javascript:void(null)" ng-click="theme.selectComments( user.id, user.name )">
+                                    <i class="fa fa-star"></i>   {{ 'SELECT_ANSWERS' | translate }} </a>
+                            </li>
+
+                            <li ng-show="theme.selected_comment.id == user.id">
+                                <a href="javascript:void(null)" ng-click="theme.deSelectComments( user.id )">
+                                    <i class="fa fa-times-circle"></i>
+                                    {{ 'CANCEL_SELECTED_ANSWERS' | translate }}
+                                </a>
+                            </li>
+
+                            <li><a href="javascript:void(null)" ng-click="theme.addComment( $event, user, 1 )" >
+                                    <i class="fa fa-envelope"></i>
+                                    {{ 'WRITE_PRIVATE_MESSAGE' | translate }}
+                                </a>
+                            </li>
+
+                        </ul>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </section>
+</div>

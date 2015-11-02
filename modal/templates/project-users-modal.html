@@ -1,0 +1,33 @@
+<div class="modal-header">
+    <h3 class="modal-title" translate>USERS_LIST</h3>
+</div>
+<div class="modal-body">
+    <section class="panel panel-default scrollable" style="max-height: 400px;">
+        <table ng-if="ctrl.data" class="table table-condensed table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th translate>USER_NAME</th>
+                    <th>Email</th>
+                    <th translate>REMOVE</th>
+                </tr>
+            </thead>
+            <tr ng-repeat="user in ctrl.data">
+                <td>{{user.name}}</td>
+                <td>{{user.username}}</td>
+                <td><a href="javascript:void(null)" class="btn btn-danger btn-xs"
+                       ng-click="ctrl.remove( user.id )" >
+                        <i class="fa fa-trash-o"></i>  {{ 'REMOVE_FROM_PROJECT' | translate }}
+                    </a>
+                </td>
+            </tr>
+        </table>
+
+    </section>
+
+
+</div>
+<div class="modal-footer">
+    <button class="btn btn-danger" ng-click="ctrl.cancel()"><i class="fa fa-times"></i>
+        {{ 'CLOSE' | translate }}
+    </button>
+</div>

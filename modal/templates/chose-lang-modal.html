@@ -1,0 +1,18 @@
+
+<div class="modal-header">
+    <h3 class="modal-title">
+        Select your language
+    </h3>
+</div>
+<div class="modal-body">
+    <form >
+        <div class="form-group">
+            <ul class="list list-group">
+                <li  class="list-group-item" ng-repeat="lang in languages" >
+                    <a href="#" ng-click="selectLanguage( lang )" class="block" ><img ng-src="img/flags/{{lang.code}}.gif" />    {{lang.name}} </a>
+                </li>
+            </ul>
+        </div>
+    </form>
+</div>
+

@@ -1,0 +1,172 @@
+<footer class="footer b-t bg-white-only forum-footer">
+    <!-- comment form -->
+    <article class="media comment-post" id="comment-form">
+
+        <a class="pull-left thumb-sm avatar">
+            <div user-image></div>
+        </a>
+
+        <section class="media-body">
+            {{comment.theme}}
+            <form name="commentForm" ng-submit="comment.submitForm()" action="" class="m-b-none">
+                <a ng-click="showForm()" ng-show="!form_opened" class="btn btn-primary m-b-md form-control">
+                    <i class="fa fa-comment"></i>
+                    {{ 'INSERT_YOUR_ANSWER_HERE' | translate }}
+
+                </a>
+                <div class="row">
+
+                    <div class="col-lg-12"  ng-class="{
+                                'col-lg-6'
+                                        : comment.user.role == 'admin' &&
+                                comment.user_reply_id_value
+                            }">
+
+                        <div class="form-group" ng-show="comment.formData.User.id">
+
+                            <strong ng-show="comment.user_reply_id_value">
+
+                                {{ 'ANSWER_FOR' | translate }}
+                            </strong>
+                            <span class="label label-primary text-md">{{comment.formData.User.name}}</span>
+                            <strong ng-show="comment.formData.Comment.private_id" class="label label-warning" translate >PRIVATE_MESSAGE</strong>
+                            <strong ng-hide="comment.formData.Comment.private_id" class="label label-success" translate>PUBLIC_MESSAGE</strong>
+                        </div>
+
+                        <div class="form-group">
+
+
+                            <textarea rows="4"
+                                      ng-model="comment.formData.Comment.text"
+                                      class="form-control forum-textarea"
+                                      required
+                                      placeholder="{{ 'INSERT_YOUR_ANSWER_HERE' | translate }}">
+                            </textarea>
+                        </div>
+                        <div class="form-group" ng-show="data.Project.youtube">
+                            <label for="youtube">Youtube video
+                                <span class="has-error"  ng-show="commentForm.youtube.$dirty && commentForm.$error.youtube">
+                                    <span class="help-block" style="display: inline" translate>
+                                        INVALID_YOUTUBE_LINK
+                                    </span>
+                                </span>
+                            </label>
+                            <input type="text"  ng-model="comment.formData.Comment.youtube" name="youtube" youtube-validate id="youtube" class="form-control">
+
+                            <div class="help-block">
+                                <p translate >INSERT_YOUTUBE_LINK</p>
+                            </div>
+
+                        </div>
+
+
+                    </div>
+
+
+                    <div class="col-lg-6" ng-if="comment.user.role == 'admin'">
+
+
+
+
+                        <div class="form-group"  ng-if="comment.formData.User.id">
+                            <p><strong translate>EMAIL_NOTIFICATION</strong></p>
+                            <div class="btn-group">
+                                <label class="btn btn-default btn-xs"
+                                       ng-class="{
+                                               'btn-success'
+                                                       : comment.formData.notify === 1 }"
+                                       ng-model="comment.formData.notify" btn-radio="1">
+                                    <i class="fa fa-check"></i>
+                                    {{ 'SEND' | translate }}
+                                </label>
+                                <label class="btn btn-default btn-xs"
+                                       ng-class="{
+                                               'btn-danger'
+                                                       : comment.formData.notify === 0 }"
+                                       ng-model="comment.formData.notify" btn-radio="0">
+
+                                    <i class="fa fa-times-circle"></i>
+                                    {{ 'DONT_SEND' | translate }}
+                                </label>
+                            </div>
+                            <span class="help-block" translate>
+                                SEND_NOTIFICATION
+
+                            </span>
+                        </div>
+
+                        <div class="form-group"  ng-if="comment.formData.User.name">
+
+                            <p><strong translate>
+                                    MESSAGE_TYPE
+
+                                </strong></p>
+
+                            <div class="btn-group">
+
+                                <label class="btn btn-default btn-xs"
+                                       ng-model="comment.formData.Comment.private_id"
+                                       btn-radio="0" translate>PUBLIC_MESSAGE
+                                </label>
+                                <label class="btn btn-default btn-xs"
+                                       ng-model="comment.formData.Comment.private_id"
+                                       btn-radio="1" translate>
+                                    PRIVATE_MESSAGE</label>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-6" ng-show="data.Project.image">
+                        <div class="form-group">
+                            <label for="exampleInputFile" translate>
+                                INSERT_PICTURE
+                            </label>
+                            <input type="file" ng-file-select="comment.onFileSelect($files)" multiple onclick="this.value = null">
+                            <p class="help-block" translate>
+                                ALLOWED_IMAGES
+                            </p>
+                        </div>
+
+
+                    </div>
+
+                    <div class="col-lg-6" ng-if="selectedFiles != null">
+                        <div class="form-group">
+                            <span ng-show="progress >= 0">{{progress}}%</span>
+                            <div ng-show="progress >= 0" class="progress progress--comment progress-xs m-t-sm">
+                                <div class="progress-bar progress-bar-info" data-toggle="tooltip" data-original-title="{{progress}}%" style="width:{{progress}}%"></div>
+                            </div>
+
+                            <ul class="comment__files"  ng-show="selectedFiles != null">
+                                <li class="items-{{selectedFiles.length}}" ng-repeat="f in selectedFiles">
+                                    <img ng-show="dataUrls[$index]" width="60"   ng-src="{{dataUrls[$index]}}">
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+
+
+
+                    <div class="col-lg-12">
+                        <div class="input-group-btn">
+                            <button ng-disabled="commentForm.$invalid" class="btn btn-primary" type="submit" >{{ 'SEND' | translate }}  </button>
+                            <a class="js-forum-footer-close  btn btn-danger"  ng-click="closeForm()">
+                                <i class="fa fa fa-times"></i>
+                                {{ 'CANCEL' | translate }}
+                            </a>
+                        </div>
+                    </div>
+
+                </div>
+
+            </form>
+        </section>
+    </article>
+</footer>

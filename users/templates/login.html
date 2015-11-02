@@ -1,0 +1,61 @@
+<section id="content" class="login-box m-t-lg wrapper-md animated fadeInUp" ng-show="show_form">
+    <div class="container aside-xxl">
+        <img src="img/logo.png" class="center-block" />
+        <section class="panel panel-default bg-white m-t-lg">
+            <header class="panel-heading text-center">
+                <h3 class="font-thin m-n"><i class="fa fa-lock"></i> {{ 'LOGIN' | translate }}</h3>
+            </header>
+            <form  class="panel-body wrapper-lg">
+                <div class="alert alert-danger" ng-show="loginError">
+                    <p><i class="fa fa-warning"></i> {{loginError}}</p>
+                </div>
+
+                <div class="form-group">
+
+                    <ul class="list list-group">
+                        <li ng-repeat="account in accounts track by $index" class="list-group-item" >
+                            <a href="#" ng-click="selectUser( account )" >
+                                {{account}}
+                            </a>
+                            <a href="#" ng-click="removeUser( $index, account )" class="pull-right">
+                                <i class="fa fa-times text-danger "></i>
+                            </a>
+                        </li>
+                    </ul>
+
+                    <input type="text" ng-if="accounts.length === 0"
+                           ng-model="Login.username" placeholder=" {{ 'ENTER_EMAIL' | translate }}"
+                           class="form-control input-lg">
+                </div>
+                <div class="form-group">
+
+                    <input type="password" ng-model="Login.password" id="inputPassword"
+                           placeholder="{{'ENTER_PASSWORD'| translate }}" class="form-control input-lg">
+                </div>
+                <div class="checkbox">
+                    <label>
+                        <input ng-model="Login.remember" ng-value="1" type="checkbox"> {{'REMEMBER_LOGIN'| translate }}
+                    </label>
+                </div>
+
+                <div class="pull-right">
+                    <a href="#" ng-click="forgot()" class=" m-t-xs"><small> {{'FORGOT_PASSWD'| translate }}</small></a> <br />
+                </div>
+                <div loading-button click="UserLogin()" stop="loginError" text="LOGIN_BTN" data-size="s"   data-class="btn-primary"></div>
+
+            </form>
+        </section>
+
+        <div new-account >
+            <div class="hr-text clearfix">
+                <span class="line">
+                    <span> OR </span>
+                </span>
+            </div>
+
+        </div>
+
+
+
+    </div>
+</section>

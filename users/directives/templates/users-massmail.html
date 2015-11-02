@@ -1,0 +1,150 @@
+<div class="row">
+    <div class="col-sm-6">
+        <h3 class="font-thin"><i class="fa fa-envelope"></i> {{ 'MESSAGE' | translate}}</h3>
+        <form ng-submit="ctrl.sendForm()" name="messageForm">
+            <div class="alert alert-danger" ng-if="messageForm.submitted && !ctrl.selected.length">
+                <p class=" text-md"><i class="fa fa-warning"></i>
+                    Vyberte aspon jedneho užívateľa zo zoznamu
+                </p>
+
+            </div>
+            <div class="alert alert-success" ng-if="ctrl.success">
+                <p class=" text-md"><i class="fa fa-check"></i>
+                    Správa bola odoslaná
+                </p>
+
+            </div>
+            <div class="form-group">
+                <label>Predmet spravy</label>
+                <input type="text" name="subject" required ng-minlength="2"   class="form-control" ng-model="ctrl.formData.subject" />
+                <div class="bg-danger error p-5" ng-if="messageForm.submitted && messageForm.subject.$error.minlength">
+                    Vyplnte predmet správy
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Text spravy</label>
+                <div   text-angular ta-toolbar-button-class="btn btn-default btn-sm" required
+                       ta-toolbar="[['h1','h2','h3', 'p'],['bold','italics', 'underline', 'ul', 'ol'], ['justifyLeft', 'justifyCenter', 'justifyRight',  'insertLink']]"
+                       ng-model="ctrl.formData.message"  >
+
+                </div>
+            </div>
+
+            <div class="actions">
+                <button class="btn btn-lg pull-right btn-primary">Odoslať správu</button>
+            </div>
+        </form>
+
+
+    </div>
+
+    <div class="col-sm-6">
+        <h3 class="font-thin m-b-md">
+            <i class="fa fa-list"></i>
+            {{ 'USERS_LIST' | translate}}
+        </h3>
+        <ul class="list-group m-b-none m-n  alt">
+            <li   class="list-group-item bg-light clearfix"  >
+
+                <div class="row">
+                    <div class="col-sm-1 text-center">
+                        <i ng-click="ctrl.selectAll()"
+                           class="fa fa-2x"
+                           ng-class="{
+                                   'fa-check-square-o text-success'
+                                           : ctrl.checked_all, 'fa-square-o' :!ctrl.checked_all}">
+
+                        </i>
+                    </div>
+                    <div class="col-sm-3 text-left">
+                        Označ všetko ({{ctrl.selected.length}}/{{ctrl.scope_users.length}})
+                    </div>
+                    <div class="col-sm-8">
+                        <div class="form-group btn-group btn-group-sm pull-right m-b-none">
+
+                            <button ng-click="ctrl.filterUsers( 2 )"
+                                    class="btn btn-dark btn-xs   "
+                                    ng-class="{
+                                            'active'
+                                                    :ctrl.filters.role_id == 2}">
+                                {{ 'RESPONDENTS' | translate }}
+                            </button>
+
+                            <button ng-click="ctrl.filterUsers( 3 )"
+                                    class="btn btn-info btn-xs  "
+                                    ng-class="{
+                                            'active'
+                                                    :ctrl.filters.role_id == 3}">
+                                {{ 'KLIENTS' | translate }}
+                            </button>
+                            <button ng-click="ctrl.filterUsers( false )"
+                                    class="btn btn-default  btn-xs"
+                                    ng-class="{
+                                            'active'
+                                                    :!ctrl.filters.role_id}" >
+                                {{ 'ALL_USERS' | translate }}
+                            </button>
+                        </div>
+                    </div>
+                    {{filters}}
+                </div>
+            </li>
+        </ul>
+        <div class="m-b-md" slim-scroll="{height:'500px'}">
+
+            <ul class="list-group  alt">
+
+                <li ng-click="ctrl.selectUser( user )"
+                    class="list-group-item   clearfix" ng-repeat="user in ctrl.users_list"
+                    ng-class="{
+                            'bg-gradient'
+                                    : user.checked}">
+                    <div class="row">
+                        <div class="col-sm-1 text-center">
+                            <i class="fa fa-2x  m-t-sm"
+                               ng-class="{
+                                       'fa-check-square-o text-success'
+                                               : user.checked,
+                                               'fa-square-o'
+                                               :!user.checked}">
+
+                            </i>
+                        </div>
+
+                        <div class="col-sm-11">
+                            <div class="media">
+                                <span  class="pull-left  thumb-sm">
+                                    <div user-image user-data="{{user}}"></div>
+                                </span>
+                                <div class="media-body pull-left">
+                                    <a href="javascript:void(null)" view-user-details user-id="{{user.id}}">
+                                        {{user.name}}
+                                        <br />
+                                        <span class="text-muted text-sm">
+                                            {{user.username}}
+                                        </span>
+
+                                    </a>
+
+                                </div>
+                                <div class="pull-right">
+                                    <span class="badge bg-dark" ng-class="{
+                                            'bg-info'
+                                                    : user.role_id === '3' }">
+                                        <span ng-if="user.role_id === '3'"> {{ 'KLIENT' | translate }} </span>
+                                        <span ng-if="user.role_id === '2'"> {{ 'RESPONDENT' | translate }} </span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </li>
+            </ul>
+        </div>
+
+    </div>
+
+</div>

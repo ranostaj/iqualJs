@@ -1,0 +1,16 @@
+<div>
+    <form ng-submit="ctrl.submitForm()" name="commentForm">
+        {{themeId}}
+        <div class="form-group">
+            <textarea ng-model="ctrl.comment" required autofocus class="form-control"
+                      placeholder="  {{ 'INSERT_YOUR_FIRST_COMMENT' | translate }}"
+                      rows="10"  auto-grow="{height:'100px'}" ></textarea>
+        </div>
+        <div class="form-group">
+            <button class="btn btn-primary" ng-disabled="commentForm.$invalid"><i class="fa fa-comment"></i>
+                {{ 'SEND' | translate }}
+            </button>
+        </div>
+    </form>
+
+</div>

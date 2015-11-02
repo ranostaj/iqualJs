@@ -1,0 +1,10 @@
+<ul class="gallery">
+
+    <li class="gallery__item" ng-repeat="image in images">
+        <a class="gallery-img"  href="javascript:void(null)" ng-click="showImage(image, images)"
+           style="background-image: url('{{thumb + image.image}}') " >
+            <i class="fa fa-search"></i>
+        </a>
+
+    </li>
+</ul>

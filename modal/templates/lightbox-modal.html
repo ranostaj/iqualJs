@@ -1,0 +1,15 @@
+
+<div class="modal-body ligtbox" style="padding-bottom: 0">
+
+    <img ng-src="{{image.original + image.image}}" style="width:100%" />
+
+    <div class="lightbox-thumbs" ng-show="images.length > 1">
+        <a href="javascript:void(null)" ng-repeat="img in images" ng-click="showImage( img )">
+            <img   ng-src="{{img.thumb + img.image}}" style="width:60px" />
+
+        </a>
+    </div>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-warning" ng-click="cancel()"> {{ 'CLOSE' | translate }} </button>
+</div>

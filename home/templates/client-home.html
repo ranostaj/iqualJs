@@ -1,0 +1,78 @@
+
+
+<div class="row">
+
+    <div class="col-sm-7" >
+        <div ng-show="home.project.name">
+            <h2 class="font-thin m-t-none">{{home.project.name}}</h2>
+            <div ng-bind-html="home.project.description">
+            </div>
+            <div class="line"></div>
+            <div class="well bg-white well-sm">
+                <h3 class="font-thin m-t-none"><span class="fa fa-info-circle"></span>  {{ 'CONTACT_DETAILS' | translate }}</h3>
+                <ul class="list list-group list-group-lg">
+                    <li> <i class="fa fa-user"></i> {{home.project.uname}}</li>
+                    <li> <i class="fa fa-phone"></i> {{home.project.phone}}</li>
+                    <li> <i class="fa fa-envelope-o"></i> <a ng-href="mailto:{{home.project.email}}">{{home.project.email}}</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div ng-hide="home.project.name" class="alert alert-warning alert-block">
+            <h4><i class="fa fa-info"></i>
+                {{ 'NO_PROJECT_ASSIGNED' | translate }}
+            </h4>
+        </div>
+    </div>
+
+
+    <div class="animated fadeInUp col-sm-5" >
+
+
+        <section class="panel panel-default">
+            <header class="panel-heading">
+                <h4 class="m-t-none m-b-none " ><span class="fa fa-flask fa-lg"></span>  {{ 'CURRENT_TOPICS' | translate }}
+                    <span class="badge pull-right">{{home.themes.length}}</span>
+                </h4>
+            </header>
+            <section class="panel-body">
+
+                <div ng-if="!home.themes" class="alert alert-warning alert-block">
+                    <h4><i class="fa fa-info"></i>  {{ 'NO_TOPICS' | translate }}!</h4>
+                    <p>{{ 'NO_TOPICS_ASSIGNED' | translate }}</p>
+                </div>
+
+                <div ng-if="home.themes" ng-repeat="theme in home.themes track by $index">
+                    <article class="media">
+
+                        <div class="media-body">
+                            <div class="pull-left">
+                                <h4 class="m-t-none">
+                                    <span class="fa fa-flask"></span>
+                                    {{theme.Theme.name}}
+                                </h4>
+
+                                <span class="text-muted font-thin small">
+                                    <i class="fa fa-calendar"></i>
+                                    {{theme.Theme.created}}
+                                </span>
+                            </div>
+
+                            <a  ui-sref="theme.view({id:theme.Theme.id})"
+                                class="btn btn-primary btn-sm pull-right">
+                                {{ 'ENTER_TOPIC' | translate }} <i class="fa fa-angle-right"></i>
+
+                            </a>
+
+                        </div>
+                    </article>
+                    <div class="line pull-in"  ng-show="($index + 1) != home.themes.length"></div>
+                </div>
+
+            </section>
+        </section>
+
+
+    </div>
+
+</div>

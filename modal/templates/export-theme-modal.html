@@ -1,0 +1,16 @@
+
+<div class="modal-header">
+    <a class="btn btn-primary pull-right" ng-click="selectText( 'modal-body' )">
+        <i class="fa fa-check-square"></i>
+        {{ 'SELECT_TEXT' | translate }}
+    </a>
+    <h3 class="modal-title" translate>EXPORT_TOPIC</h3>
+
+    {{ "SELECT_TEXT_INFO" | translate }}
+
+</div>
+<div class="modal-body" id="modal-body" style="height: 300px; overflow: auto">
+    <ol>
+        <li ng-repeat="item in comments" ng-include="'js/themes/templates/comment-table.html'"></li>
+    </ol>
+</div>

@@ -1,0 +1,46 @@
+<article  id="comment-id-{{comment.Comment.id}}" class="comment-item comment-user-{{comment.User.id}}">
+    <a class="pull-left thumb-sm avatar">
+
+        <div user-image user-data="{{comment.User}}"></div>
+    </a>
+    <span class="arrow left"></span>
+
+    <section class="comment-body panel panel-default">
+        <header class="panel-heading bg-white">
+            <a href="javascript:void(null)" view-user-details user-id="{{comment.User.id}}">{{comment.User.name}}</a>
+            <label ng-if="comment.User.role_id == 1" class="label bg-dark m-l-xs">Admin</label>
+
+            <span  ng-show="comment.User.username"  class="text-muted"> <i class="fa fa-envelope"></i>
+                {{comment.User.username}}
+            </span>
+
+            <span class="text-muted m-l-sm pull-right">
+                <i class="fa fa-clock-o"></i>
+                <span time-ago from-time="{{comment.Comment.created}}"></span>
+            </span>
+
+            <span ng-show="comment.Comment.private_id" class="label label-warning pull-right">
+                {{ 'PRIVATE_MESSAGE' | translate }} : @{{comment.Comment.private_name}}
+            </span>
+        </header>
+        <div class="panel-body">
+
+
+            <div class="comment__youtube" youtube code="comment.Comment.youtube"></div>
+
+
+
+            <div class="gallery-comment" gallery thumb="img/comments/" original="img/comments/" images="comment.Image" ></div>
+
+            <div class="comment__text">
+                {{comment.Comment.text}}
+            </div>
+            <div class="comment-action m-t-sm">
+
+                <a  ng-show="setup.reply" ng-click="reply(comment.Comment.id, comment.User)" class="js-forum-reply btn btn-default btn-xs">
+                    <i class="fa fa-mail-reply text-muted"></i>  {{ 'REPLY' | translate }}
+                </a>
+            </div>
+        </div>
+    </section>
+</article>

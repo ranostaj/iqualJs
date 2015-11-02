@@ -1,0 +1,18 @@
+<div >
+
+    <ul class="breadcrumb no-border no-radius m-b-none b-light pull-in">
+
+
+        <li><a ng-href="#/{{role}}"><i class="fa fa-home"></i> Home</a></li>
+        <li ng-repeat="link in links track by $index">
+            <a ng-show="link.url"   ui-sref="{{link.url ? link.url : '/'}}"   >{{link.title}}</a>
+            <span ng-hide="link.url">{{link.title}}</span>
+        </li>
+        <span class="text-danger pull-right" ng-if="show_demo_info">
+            <i class="fa fa-warning"></i> {{ "DEMO_INFO" | translate }}
+        </span>
+    </ul>
+
+
+
+</div>

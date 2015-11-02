@@ -1,0 +1,203 @@
+<section class="hbox stretch">
+
+    <aside id="aside-theme"  class="aside-md b-l"   style="width:{{theme.cookie_sidebar ? theme.cookie_sidebar+'px' : '40%'}}" >
+
+        <section class="vbox">
+            <div ruller class="ruller" elements='{"from":"aside-theme","to":"aside-content"}' max="1000" min="220"  ></div>
+
+
+
+
+
+            <div class="aside-theme__wrap clearfix">
+                <div class="btn-group pull-right">
+                    <button class="btn btn-sm btn-default" ng-click="theme.toggleTheme( $event )">
+                        <span ng-show="!theme.toggle_theme" title="{{ 'EXPAND_WINDOW' | translate }} "><i class="fa fa-expand"></i></span>
+                        <span ng-show="theme.toggle_theme" title="{{ 'COLAPSE_WINDOW' | translate }} " ><i class="fa fa-compress"></i></span>
+                    </button>
+
+                    <button class="btn btn-sm btn-default"
+                            ng-show="theme.user.role == 'admin'"
+                            ng-class="{
+                                    'btn-success'
+                                            : theme_edit }"
+                            ng-click="theme_edit = theme_edit == true ? false : true">
+
+                        <span  ng-show="!theme_edit" title="{{ 'EDIT_TOPIC' | translate }}"> <i class="fa fa-edit"></i></span>
+                        <span ng-click="theme.saveTheme()" title="{{ 'SAVE' | translate }}" ng-show="theme_edit"> <i class="fa fa-save"></i></span>
+                    </button>
+
+                    <button class="btn btn-sm btn-danger" title="{{ 'CLOSE' | translate }}"
+                            ng-show="theme.user.role == 'admin' && theme_edit"
+                            ng-click="theme_edit = theme_edit == true ? false : true">
+                        <span> <i class="fa fa-times"></i></span>
+                    </button>
+                </div>
+
+                <div class="theme-info">
+
+                    <h3>{{theme.theme.Theme.name}}</h3>
+                    <div class="scrollable hover" >
+                        <div ng-show="theme_edit" text-angular ta-toolbar-button-class="btn btn-default btn-sm" ta-toolbar="[['h1','h2','h3', 'p'],['bold','italics', 'underline', 'ul', 'ol'], ['justifyLeft', 'justifyCenter', 'justifyRight',  'insertLink']]"  ng-model="theme.theme.Theme.text" ></div>
+                        <div ng-hide="theme_edit" class="m-b-sm" ng-bind-html='theme.theme.Theme.text'>
+
+                        </div>
+
+                    </div>
+                    <div class="theme-images scrollable hover">
+                        <div gallery thumb="img/themes/s/" original="img/themes/" images="theme.theme.ThemeImage" ></div>
+                    </div>
+                </div>
+
+            </div>
+
+        </section>
+
+
+    </aside>
+
+
+
+    <aside class="bg-light lter b-l" id="aside-content">
+
+        <section class="vbox">
+
+            <header class="bg-light dk   forum-header clearfix" >
+                <div class="btn-group pull-left"   ng-if="theme.user.role == 'admin'">
+                    <a  ui-sref="admin.theme.view({id:theme.theme.Theme.id})" class="btn btn-sm m-b-md btn-default ">
+                        <i class="fa fa-flask"></i>   {{ 'EDIT_TOPIC' | translate }} <i class="fa fa-pencil"></i>
+                    </a>
+                    <a  ui-sref="admin.project.view({id:theme.theme.Theme.project_id})" class="btn btn-sm m-b-md btn-default ">
+                        <i class="fa fa-file-o"></i>   {{ 'EDIT_PROJECT' | translate }}   <i class="fa fa-pencil"></i>
+                    </a>
+                </div>
+                <div class="btn-group pull-right">
+                    <button ng-click="theme.refreshComments()" class="btn btn-sm btn-default" data-toggle="tooltip"
+                            data-placement="bottom" data-title="Refresh" data-original-title="" title="{{ 'REFRESH' | translate }}"><i class="fa fa-refresh animated"></i>
+                    </button>
+                    <a ng-show="theme.setup.export" class="btn btn-sm btn-default" title="{{ 'EXPORT_TOPIC' | translate }}"
+                       ng-click="theme.export( theme.theme.id )"
+                       href="javascript:void(null)"><i class="fa fa-upload"></i></a>
+
+
+                    <button class="btn btn-sm btn-default" ng-click="theme.fullScreen( $event )">
+                        <span ng-show="!theme.full_screen" title="{{ 'EXPAND_WINDOW' | translate }}"><i class="fa fa-expand"></i></span>
+                        <span ng-show="theme.full_screen" title="{{ 'COLAPSE_WINDOW' | translate }}" ><i class="fa fa-compress"></i></span>
+                    </button>
+
+                    <button class="btn btn-sm btn-info" title="{{ 'ADD_COMMENT' | translate }}" ng-show="theme.setup.add_comment" ng-click="theme.addComment( $event )">
+                        <i class="fa fa-comment"></i>
+                    </button>
+
+
+                </div>
+
+
+
+
+                <div class="clear"></div>
+
+
+
+
+                <div class="forum-navbar">
+
+                    <div class="btn-toolbar pull-left">
+
+
+                        <div class="btn-group">
+
+                            <button ng-show="theme.selected_comment.id"
+                                    class="btn btn-sm btn-danger"
+                                    ng-click="theme.deSelectComments( theme.selected_comment.id )">
+                                <i class="fa fa-times-circle"></i> {{theme.selected_comment.name}}
+                            </button>
+                        </div>
+                    </div>
+
+
+
+
+
+                    <div class="btn-group pull-right">
+                        <div class="counter pull-left">{{ 'NUMBER_OF_COMMENTS' | translate }}: <strong>{{theme.comments.length}}</strong> </div>
+                        <label btn-radio="'newest'" class="btn btn-sm btn-default" ng-model="filterForm.order" btn-radio> <i class="fa fa-sort-down"></i></label>
+                        <label btn-radio="'oldest'" class="btn btn-sm btn-default" ng-model="filterForm.order" btn-radio><i class="fa fa-sort-up"></i></label>
+                    </div>
+
+
+
+
+
+                    <div class="clear"></div>
+
+
+                </div>
+
+                <!--                <div class="new_comments" ng-show="theme.new_comments">
+                                    <a href="javascript:void()" ng-click="theme.refreshComments()" title="Zobraziť nové"><i class="fa fa-warning"></i> Pribudli nové komentáre  ({{theme.new_comments}}) </a>
+                                </div>-->
+
+
+            </header>
+
+
+            <section class="scrollable hover forum-container" load-scroll="theme.loadScroll()" ng-class="{
+                    'forum-container--more'
+                            :  theme.theme_more_toggle }">
+
+                <section class="p-20">
+
+                    <div ng-show="!theme.comments.length">
+                        <div class="alert alert-warning" >
+                            <p ng-show="!theme.setup.add_comment"> <i class="fa fa-info-circle"></i>
+                                {{ 'NO_RESPONSES_TO_TOPIC' | translate }}
+
+                            </p>
+                            <p ng-show="theme.setup.add_comment"> <i class="fa fa-info-circle"></i>
+                                {{ 'NO_RESPONSES_TO_TOPIC_USE_FORM' | translate }}
+                            </p>
+                        </div>
+
+                        <comment-form ng-show="theme.setup.add_comment" theme-data="{{theme.theme.Theme}}"></comment-form>
+                    </div>
+
+
+
+
+
+                    <section class="comment-list block ">
+                        <theme-comments-list reply-comment="theme.replyComment" comments="theme.comments"></theme-comments-list>
+                    </section>
+                </section>
+            </section>
+            <post-comment show-form="theme.addComment()" data="theme.theme" ng-if="theme.setup.add_comment"></post-comment>
+
+    </aside>
+
+
+    <aside class="aside-md b-l" id="aside-bar">
+
+        <section class="vbox">
+
+            <div class="aside-box" ng-if="theme.themes.length">
+                <header class="bg-light dk header">
+                    <p> {{ 'TOPICS' | translate }} ({{theme.themes.length}})</p>
+                </header>
+                <section class="scrollable bg-white " slim-scroll="{height:'300px'}">
+                    <div class="list-group list-group-alt no-radius no-borders">
+                        <a ng-repeat="item in theme.themes"
+                           ui-sref="theme.view({id:item.Theme.id})" class="list-group-item">
+                            <i class="fa fa-circle text-success text-xs"></i>
+                            <span>{{item.Theme.name}}</span>
+                        </a>
+                    </div>
+                </section>
+            </div>
+
+            <div ng-include="'js/themes/templates/users-theme-list.html'" ng-if="theme.user.role == 'admin'"></div>
+
+        </section>
+
+    </aside>
+</section>

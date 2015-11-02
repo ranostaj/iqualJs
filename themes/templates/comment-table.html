@@ -1,0 +1,34 @@
+
+<div style="font-family: arial; font-size: 12px;  ">
+    <strong style="font-family: arial; font-size: 14px;  ">{{item.User.name}} </strong>
+    <span ng-if="item.User.role_id == 1" style="color: #ff0000" >Admin</span>
+    <span style="font-family: arial; font-size: 11px; text-align:right;">{{item.Comment.created}}</span>
+
+
+    <p ng-if="item.Image"> <img ng-repeat="image in item.Image" width="60" style="width: 60px;" src="img/comments/{{image.name}}" />  </p>
+
+
+    <p style="margin:0; padding:0;">
+        {{item.Comment.text}}
+
+        <span ng-show="item.Comment.youtube"  >
+            <br>
+            <strong>Youtube Link:</strong>
+            <a href="https://www.youtube.com/watch?v={{item.Comment.youtube}}">
+                https://www.youtube.com/watch?v={{item.Comment.youtube}}
+            </a>
+        </span>
+    </p>
+
+    <hr style="margin:0; padding:0;" />
+
+</div>
+
+
+<ol ng-if="item.children"
+    style="margin:0px 0px 0px 40px;   ">
+    <li  ng-repeat="item in item.children"  ng-include="'js/themes/templates/comment-table.html'">
+
+
+    </li>
+</ol>

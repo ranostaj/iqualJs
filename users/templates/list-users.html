@@ -1,0 +1,13 @@
+<div ui-view>
+    <div class="panel">
+        <div class="panel-heading">
+            <h3 class="m-t-none" ><i class="fa fa-user"></i> {{ 'USERS_LIST' | translate }}</h3>
+        </div>
+
+        <div class="panel-body">
+
+            <div user-list on-view="userCtrl.viewUser(id)" ></div>
+        </div>
+    </div>
+</div>
+

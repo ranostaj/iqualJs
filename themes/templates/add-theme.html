@@ -1,0 +1,198 @@
+
+<div class="btn-group btn-group-md pull-right">
+    <button type="submit" ng-click="saveTheme()"
+            ng-disabled="themeForm.$invalid" class="btn btn- m-b-md btn-info  ">
+        <i class="fa fa-save"></i> {{ 'SAVE_TOPIC' | translate }}
+    </button>
+    <a  ui-sref="admin.project.view({id:formData.Theme.project_id})" class="btn m-b-md btn-default ">
+        <i class="fa fa-file-o"></i>  {{ 'EDIT_PROJECT' | translate }}  <i class="fa fa-pencil"></i>
+    </a>
+    <a  ui-sref="theme.view({id:formData.Theme.id})" class="btn m-b-md btn-default ">
+        <i class="fa fa-flask"></i>   {{ 'ENTER_TOPIC' | translate }}  <i class="fa fa-angle-right"></i>
+    </a>
+</div>
+
+<div class="clear"></div>
+
+<section class="panel panel-default">
+    <header class="panel-heading project-add-heading bg-light">
+        <tabset class='pull-right'>
+            <tab select="selectTab('info')" >
+                <tab-heading>
+                    <i class='fa fa-cog'></i> {{ 'BASIC_INFO_AND_SETTINGS' | translate }}
+
+                </tab-heading>
+            </tab>
+
+            <tab select="selectTab('foto')" >
+                <tab-heading>
+                    <i class='fa fa-picture-o'></i>
+                    {{ "PHOTOS" | translate }}
+
+                </tab-heading>
+            </tab>
+
+            <tab select="selectTab('project')" >
+                <tab-heading>
+                    <i class="fa fa-file-o"></i> {{ "PROJECT" | translate }}
+                </tab-heading>
+            </tab>
+
+            <tab select="selectTab('users')">
+                <tab-heading>
+                    <i class="fa fa-user"></i> {{ "RESPONDENTS" | translate }} ({{theme_users.length}})
+                </tab-heading>
+            </tab>
+        </tabset>
+        <h3 class="panel-title  m-b-none" ng-show="formData.Theme.id">
+            <i class="fa fa-pencil"></i>  {{ 'EDIT_TOPIC' | translate}}:
+            <span class="text-success">[{{formData.Theme.name}}]</span>
+        </h3>
+    </header>
+
+
+    <div class="panel-body clearfix">
+        <div class="tab-content ">
+            <div class="tab-pane" ng-class="{ 'active': tabs.info}" >
+                <div class="form-group">
+                    <h3 class="font-thin"><i class="fa fa-cog"></i> {{ 'BASIC_INFO_AND_SETTINGS' | translate }} </h3>
+                </div>
+                <div theme-add-form theme="formData" ></div>
+            </div>
+
+            <div class="tab-pane" ng-class="{ 'active': tabs.project}" >
+
+                <div class="form-group">
+                    <a ui-sref="admin.project.view({id:formData.Project.id})"  class="btn btn-primary pull-right">
+                        <i class="fa fa-pencil"></i>   {{ 'EDIT' | translate}} {{ 'PROJECT' | translate}}
+                    </a>
+                    <h3 class="font-thin"><i class="fa fa-file-o"></i> {{formData.Project.name}} </h3>
+                </div>
+
+
+                <div ng-bind-html="formData.Project.description"></div>
+
+
+            </div>
+            <div class="tab-pane" ng-class="{
+                    'active'
+                            : tabs.foto}" >
+
+                <div class="form-group">
+                    <h3 class="font-thin"><i class="fa fa-picture-o"></i>  {{ 'PHOTOS' | translate}} </h3>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4">
+                        <span ng-show="uploadProgress" class="label label-info">{{uploadProgress}}%</span>
+                        <section class="panel-body">
+                            <div ng-show="uploadProgress" class="progress m-t-sm">
+                                <div class="progress-bar progress-bar-warning text-center"   data-original-title="{{uploadProgress}}%" style="width: {{uploadProgress}}%">
+                                    <span>{{uploadProgress}}%</span>
+                                </div>
+                            </div>
+                            <div ng-hide="uploadProgress" ng-file-drop="onFileSelect($files)"
+                                 class="drop-box"
+                                 ng-file-drag-over-class="dragover"
+                                 ng-show="dropSupported">
+                                {{ 'INSERT_PICTURE' | translate }}
+
+                            </div>
+
+                            <div ng-file-drop-available="dropSupported=true"
+                                 ng-show="!dropSupported">
+                                HTML5 Drop File is not supported!
+                            </div>
+                        </section>
+                    </div>
+                    <div class="col-md-8">
+                        <div images-list delete-image="deleteImage(index,id)"  ng-model="formData.ThemeImage" ></div>
+                    </div>
+                </div>
+
+
+            </div>
+            <div class="tab-pane" ng-class="{
+                    'active'
+                            : tabs.users}" >
+
+                <div class="form-group">
+                    <h3 class="font-thin"><i class="fa fa-user"></i>  {{ 'RESPONDENTS' | translate }}</h3>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <section class="panel panel-success">
+                            <header class="panel-heading"> {{ 'ASSIGNED_RESPONDENTS' | translate }}  ({{ theme_users.length}})
+                                <a  ng-click="deleteAll()" id="remove-all" class="btn btn-default pull-right btn-xs">
+                                    {{ 'REMOVE_RESPONDENTS' | translate }}   <i class="fa fa-angle-double-right"></i>
+                                </a>
+                            </header>
+                            <section class="panel-body" slim-scroll="{height: '300px'}">
+                                <ul class="list-group">
+                                    <li class="list-group-item clearfix" ng-repeat="user_in in theme_users" >
+                                        <span class="pull-left"><div user-image user-data="{{user_in}}" width="40" ></div></span>
+
+                                        <div class="pull-left">
+                                            <a href="javascript:void(null)" class="pull-left" view-user-details user-id="{{user_in.id}}">
+                                                {{user_in.name}}
+                                            </a>
+                                            <br />
+                                            <span class="text-muted">{{user_in.username}}</span>
+                                        </div>
+                                        <button ng-click="removeUser( user_in )" class="btn btn-default btn-xs pull-right">
+                                            <i class="fa fa-minus"></i> {{ 'REMOVE' | translate }}
+                                        </button>
+                                    </li>
+                                </ul>
+
+                                <div class="alert alert-warning" ng-if="!theme_users.length">
+                                    <p>
+                                        <i class="fa fa-warning"></i>
+                                        {{ 'NO_RESPONDENTS_ASSIGNED' | translate }}
+
+                                    </p>
+                                </div>
+                            </section>
+                        </section>
+                    </div>
+
+
+                    <div class="col-md-6">
+                        <section class="panel panel-danger" >
+                            <header class="panel-heading"> {{ "REMOVED" | translate }} ({{ users.length}})
+                                <a  ng-click="addAll()" id="remove-all" class="btn btn-default pull-right btn-xs">
+                                    <i class="fa fa-angle-double-left"></i>
+                                    {{ 'ASSIGN_ALL_RESPONDENTS' | translate }}
+
+                                </a>
+                            </header>
+                            <section class="panel-body" slim-scroll="{height: '300px'}">
+                                <ul class="list-group">
+                                    <li class="list-group-item text-muted clearfix" ng-repeat="user_out in users" >
+                                        <span class="pull-left"><div user-image user-data="{{user_out}}" width="40" ></div></span>
+
+                                        <div class="pull-left">
+                                            <a href="javascript:void(null)" class="pull-left" style=" " view-user-details user-id="{{user_out.id}}">
+                                                {{user_out.name}}
+                                            </a>
+                                            <br />
+                                            <span class="text-muted">{{user_out.username}}</span>
+                                        </div>
+
+                                        <button ng-click="addUser( user_out )" class="btn btn-default btn-xs pull-right">
+                                            <i class="fa fa-plus"></i>  {{ 'ADD' | translate }}
+
+                                        </button>
+                                    </li>
+                                </ul>
+                            </section>
+                        </section>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+

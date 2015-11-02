@@ -1,0 +1,112 @@
+<!--REMOVE THIS FILE-->
+
+<div class="m-b-md">
+    <h3 class="m-b-none" translate>TOPICS_LIST</h3>
+</div>
+
+
+<div class="row m-b-md">
+    <div class="col-lg-3">
+        <div class="form-group">
+            <label translate>SELECT_PROJECT</label>
+            <select ui-select2
+                    class="select2"
+                    style="width:100%"
+                    ng-model="themeCtrl.filters.Theme.project_id"
+                    ng-change="themeCtrl.changeFilter()"
+                    >
+                <option ng-repeat="project in themeCtrl.projects" value="{{project.id}}">{{project.name}}</option>
+            </select>
+
+
+        </div>
+
+
+    </div>
+
+    <div class="col-lg-4">
+        <div class="form-group">
+            <label translate>SELECT_STATE</label> <br />
+            <change-state change="themeCtrl.changeFilter()" ng-model="themeCtrl.filters.Theme.active"></change-state>
+
+        </div>
+
+    </div>
+
+    <div class="col-lg-3 pull-right">
+        <div pagin-counter count="themeCtrl.themes.length"></div>
+    </div>
+</div>
+
+
+<div class="row">
+
+    <div class="col-lg-3 theme-item animated   fadeInUp" ng-repeat="theme in themeCtrl.themes track by $index">
+        <section class="panel ">
+
+            <header class="panel-heading">
+                <switch class="pull-right" switch-class="mini" change="themeCtrl.changeActive(model,theme.Theme.id)" model="theme.Theme.active" ></switch>
+                <h3 class="panel-title">{{theme.Theme.name}}</h3>
+            </header>
+            <div class="panel-body">
+
+                <div class="clear">
+                    <small class="block text-muted">
+                        {{ 'PROJECT' | translate }}: <a ui-sref="admin.project.view({id:theme.Project.id})" >{{theme.Project.name}}</a>
+                    </small>
+
+                    <small class="block text-muted">
+                        {{ 'COMMENTED' | translate }}:  <strong>{{theme.Theme.comments}}x</strong>
+                    </small>
+
+
+                </div>
+
+                <div class="clear">
+                    <div class=" btn-group btn-group-xs">
+                        <a  ui-sref="admin.theme.view({id:theme.Theme.id})" class="btn btn-xs btn-default m-t-xs">
+                            <i class="fa fa-pencil"></i>
+                            {{ 'EDIT' | translate }}
+                        </a>
+                        <a  ui-sref="theme.view({id:theme.Theme.id})" class="btn btn-xs btn-success m-t-xs">
+                            <i class="fa fa-arrow-circle-right"></i>
+                            {{ 'ENTER' | translate }}
+                        </a>
+
+                        <a
+                            ng-click="themeCtrl.viewUsers(theme.Theme.id)"
+                            class="btn   btn-default btn-xs  m-t-xs">
+                            <i class="fa fa-user"></i>
+                            ({{theme.Theme.respondents}})
+                        </a>
+                    </div>
+
+
+                    <a  ng-confirm
+                        ng-confirm-message="{{ 'REALLY_DELETE_TOPIC' | translate }}?"
+                        ng-confirm-description="{{theme.Theme.name}}"
+                        ng-confirm-click="themeCtrl.deleteRow(theme.Theme.id)"  class="btn  btn-xs pull-right  btn-danger m-t-xs">
+                        <i class="fa fa-trash-o"></i>
+                        {{ 'DELETE' | translate }}
+
+                    </a>
+
+                </div>
+            </div>
+
+        </section>
+    </div>
+
+    <div ng-show="!themeCtrl.themes" class="col-lg-12">
+        <div class="alert alert-warning">
+            <p ng-show="themeCtrl.filter_change"><i class="fa fa-info-circle"></i>
+                {{ 'NO_TOPICS_FILTER' | translate }}
+
+            </p>
+            <p ng-show="!themeCtrl.filter_change"><i class="fa fa-info-circle"></i>
+                {{ 'NO_TOPICS_FOUND' | translate }}
+
+            </p>
+        </div>
+    </div>
+</div>

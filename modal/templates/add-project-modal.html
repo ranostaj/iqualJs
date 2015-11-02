@@ -1,0 +1,23 @@
+
+<div class="modal-header">
+    <h3 class="modal-title"><i class="fa fa-file-o"></i>
+        {{ 'CREATE_PROJECT' | translate }}
+    </h3>
+</div>
+<div class="modal-body">
+    <form name="addProjectForm">
+        <div class="form-group">
+            <label translate>PROJECT_NAME</label>
+            <input type="text" required class="form-control" ng-model="formData.name" />
+        </div>
+    </form>
+
+</div>
+<div class="modal-footer wrapper-sm">
+    <button class="btn btn-primary" ng-disabled="addProjectForm.$invalid" ng-click="save()">
+        <i class="fa fa-check"></i> {{ 'SAVE' | translate }}</button>
+
+    <button class="btn btn-danger" ng-click="cancel()"><i class="fa fa-times"></i>
+        {{ 'CANCEL' | translate }}
+    </button>
+</div>

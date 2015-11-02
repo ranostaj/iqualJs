@@ -1,0 +1,12 @@
+<div ng-if="allow_create_account">
+    <div ng-transclude></div>
+    <section class="panel panel-default bg-white m-t-lg">
+        <header class="panel-heading text-center">
+            <h4 class="font-thin m-n"><i class="fa fa-user"></i> {{ 'CREATE_NEW_ACCOUNT' | translate }}</h4>
+        </header>
+
+        <div  class="panel-body wrapper text-center">
+            <button class="btn btn-primary btn-s-lg" ng-click="newAccount()"><i class="fa fa-plus"></i> {{'CREATE_NEW_ACCOUNT'| translate }}</button>
+        </div>
+    </section>
+</div>

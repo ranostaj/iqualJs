@@ -1,0 +1,93 @@
+<div>
+    <ul class="notification-list list-group gutter list-group-sp animated pull-left  block"   ng-class="{'hidden ': ctrl.moveListLeft, 'fadeInDown ': !ctrl.moveListLeft}">
+        <li ng-repeat="row in ctrl.comments track by $index" class="list-group-item box-shadow clearfix animated fadeInDown" >
+
+            <div class="row">
+                <div class="col-sm-2">
+                    <div style="width: 30px" user-image user-data="{{row.User}}"></div>
+                    <br />
+                    <span class="text-sm text-muted">{{row.User.name}}</span>
+                </div>
+                <div class="col-sm-7">
+
+                    <p class="text-dark"> {{row.Comment.text}} </p>
+                    <i class="fa fa-clock-o"></i> <span class="text-sm text-muted " time-ago from-time="{{row.Comment.created}}"></span>
+                </div>
+                <div class="col-sm-3">
+                    <div class="btn-group btn-group-xs m-t-sm pull-right">
+                        <button title="{{ 'REPLY' | translate }}" class="btn btn-default comment-reply  text-primary" ng-click="ctrl.reply( row )">
+                            <i class="fa fa-reply"></i>
+                        </button>
+                        <button title="{{ 'REMOVE' | translate }}" class="btn btn-default comment-remove  text-danger" ng-click="ctrl.deleteComment( row.Comment )">
+                            <i class="fa fa-times"></i>
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+        </li>
+    </ul>
+
+
+    <div class="animated notification-form pull-left"   ng-class="{'hidden':!ctrl.moveListLeft, 'fadeInUp':ctrl.moveListLeft}">
+
+        <div class="clear"></div>
+        <form   name="replyForm" >
+            <section class="panel b-light wrapper">
+
+                <header>
+                    <button  class="btn btn-xs btn-default pull-right" ng-click="ctrl.closeReply( $event )">
+                        <i class="fa fa-times text-muted"></i>
+                    </button>
+                    <h3 class="font-thin m-t-none ">
+                        <a ui-sref="theme.view({id:ctrl.CommentData.Theme.id})" class="text-dark">
+                            {{ctrl.CommentData.Theme.name}}
+                        </a>
+                    </h3>
+                </header>
+
+                <section >
+                    <article class="chat-item left">
+                        <div class="center-block text-center">
+                            <div user-image width="60" ng-if="ctrl.CommentData.User" user-data="{{ctrl.CommentData.User}}"></div>
+                            <br />
+                            <h4 class="font-thin m-b-md">{{ctrl.CommentData.User.name}}</h4>
+                        </div>
+
+                        <div class="text-sm m-b-sm">
+                            <p class="m-b-none">{{ctrl.CommentData.Comment.text}}
+                            </p>
+
+                        </div>
+                        <div class="text-muted m-b-sm">
+                            <i class="fa fa-clock-o"></i>
+                            <span time-ago from-time="{{ctrl.CommentData.Comment.created}}"></span>
+                        </div>
+
+                    </article>
+
+                </section>
+                <div class="line pull-in"></div>
+                <footer class="clearfix" >
+
+
+                    <textarea rows="6" required="" name="message" ng-model="ctrl.formData.message"
+                              placeholder="{{ 'INSERT_YOUR_ANSWER_HERE' | translate }}"
+
+
+                              class="form-control pull-left m-b-sm" auto-grow ></textarea>
+
+                    <div ng-show="!replyForm.$invalid"  loading-button click="ctrl.save()" stop="ctrl.moveListLeft" text="SEND" data-size="xs"   data-class="btn-primary  pull-right"></div>
+                </footer>
+
+
+            </section>
+        </form>
+    </div>
+
+    <div class="alert alert-warning" ng-if="!ctrl.comments.length">
+        <p class="m-n"><i class="fa fa-info"></i>
+            {{ "NO_NOTIFICATIONS" | translate }}
+        </p>
+    </div>
+</div>

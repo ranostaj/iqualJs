@@ -1,0 +1,75 @@
+<form role="form" name="themeForm"  >
+
+    <div class="row">
+        <div class="col-md-7">
+            <div class="form-group">
+                <label translate>SELECT_PROJECT</label>
+                <select ui-select2
+                        class="select2"
+                        style="width:100%"
+                        ng-model="ctrl.formData.Theme.project_id"
+                        ng-change="ctrl.loadUsers()"
+                        >
+                    <option ng-repeat="project in ctrl.projects" value="{{project.id}}">{{project.name}} - ({{project.users}})</option>
+                </select>
+
+            </div>
+
+            <div class="form-group">
+                <label translate>TOPIC_NAME</label>
+                <input ng-model="ctrl.formData.Theme.name" required type="text" class="form-control"  >
+            </div>
+
+            <div class="form-group">
+                <label translate>TOPIC_DESC</label>
+                <div text-angular
+                     ta-toolbar-button-class="btn btn-default btn-sm"
+                     ta-toolbar="[['h1','h2','h3', 'p'],['bold','italics', 'underline', 'ul', 'ol'], ['justifyLeft', 'justifyCenter', 'justifyRight',  'insertLink']]"
+                     ng-model="ctrl.formData.Theme.text" ></div>
+            </div>
+
+
+
+        </div>
+
+        <div class="col-md-5">
+            <div class="panel-body">
+
+                <div class="form-group">
+                    <h4 class="font-thin"><i class="fa fa-power-off p-5 text-white"
+                                             ng-class="{'bg-danger text-white ' : ctrl.formData.Theme.active != 1, 'bg-success' : ctrl.formData.Theme.active == 1  }"></i>
+                        {{ 'STATUS' | translate }}
+                    </h4>
+                    <div class="btn-group btn-group-xs">
+                        <label class="btn btn-xs btn-default" ng-change="ctrl.changeActive()" ng-class="{'btn-success' : ctrl.formData.Theme.active == 1  }" ng-model="ctrl.formData.Theme.active" btn-radio='1'>
+                            {{ 'ACTIVE' | translate }}
+                        </label>
+                        <label class="btn btn-xs btn-default" ng-change="ctrl.changeActive()" ng-class="{'btn-danger' :  ctrl.formData.Theme.active == 0 }" ng-model="ctrl.formData.Theme.active" btn-radio='0'>
+                            {{ 'INACTIVE' | translate }}
+                        </label>
+                    </div>
+
+                </div>
+
+                <div class="form-group">
+
+
+                    <h4 class="font-thin"><i class="fa fa-"></i>
+                        {{ 'TOPIC_TYPE' | translate}}
+                    </h4>
+
+                    <div class="btn-group btn-group-xs">
+                        <label class="btn btn-xs btn-default"  ng-change="ctrl.changeType()"  ng-class="{'btn-success' : ctrl.formData.Theme.type == 1  }" ng-model="ctrl.formData.Theme.type" btn-radio='1'> One to One</label>
+                        <label class="btn btn-xs btn-default"  ng-change="ctrl.changeType()"  ng-class="{'btn-success' :  ctrl.formData.Theme.type == 0 }" ng-model="ctrl.formData.Theme.type" btn-radio='0'>Public</label>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+</form>

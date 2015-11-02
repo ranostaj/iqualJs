@@ -1,0 +1,37 @@
+<form name="modalForm" ng-submit="saveModalForm()">
+    <div class="modal-header">
+        <h3 class="modal-title">Pictogram</h3>
+    </div>
+
+
+
+    <div class="modal-body" >
+        <div class="alert alert-success" ng-show="success">
+            <p>
+                <i class="fa fa-check-circle"></i>
+                <strong>OK!</strong>
+                {{success}}</p>
+        </div>
+
+        <div  ng-hide="success">
+            <div class="form-group">
+                <ul class="list list-inline">
+
+                    <li ng-repeat="image in [1, 2, 3, 4, 5]">
+                        <label   ng-class="{'btn btn-success':pictogramModel == image, 'btn btn-default': pictogramModel != image}"  >
+                            <img src="img/avatars/icon-{{image}}.png" width="60" alt="" />
+                            <input type="radio" name="pictogram" style="display: none"  ng-change="changeModel( image )"  ng-model="$parent.pictogramModel" value="{{image}}"
+                        </label>
+                    </li>
+                </ul>
+
+            </div>
+
+        </div>
+
+
+    </div>
+    <div class="modal-footer">
+        <a class="btn btn-info" ng-click="cancel()"> {{ 'CLOSE' | translate }} </a>
+    </div>
+</form>

@@ -1,0 +1,7 @@
+
+<label class="switch switch-sm  switch-on-off" ng-class="{'switch-mini' : switchClass }">
+
+    <input ng-model="bindModel" ng-checked="(bindModel == true || bindModel == '1'  ? 1 : 0)"  ng-change="switchChange(bindModel)" type="checkbox"  />
+    <span ng-class="{'checked': bindModel == true, 'checked' : bindModel == '1'}" ></span>
+
+</label>

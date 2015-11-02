@@ -1,0 +1,51 @@
+
+<article  id="comment-id-{{item.Comment.id}}" class="comment-item comment-user-{{item.User.id}}">
+    <a class="pull-left thumb-sm avatar">
+
+        <div user-image user-data="{{item.User}}"></div>
+    </a>
+    <span class="arrow left"></span>
+
+    <section class="comment-body panel panel-default">
+        <header class="panel-heading bg-white">
+            <a href="javascript:void(null)" view-user-details user-id="{{item.User.id}}">{{item.User.name}}</a>
+            <label ng-if="item.User.role_id == 1" class="label bg-dark m-l-xs">Admin</label>
+
+            <span  ng-show="item.User.username"  class="text-muted"> <i class="fa fa-envelope"></i>
+                {{item.User.username}}
+            </span>
+
+            <span class="text-muted m-l-sm pull-right">
+                <i class="fa fa-clock-o"></i>
+                <span time-ago from-time="{{item.Comment.created}}"></span>
+            </span>
+
+            <span ng-show="item.Comment.private_id" class="label label-warning pull-right">
+                {{ 'PRIVATE_MESSAGE' | translate }} : @{{item.Comment.private_name}}
+            </span>
+        </header>
+        <div class="panel-body">
+
+
+            <div class="comment__youtube" youtube code="item.Comment.youtube"></div>
+
+
+
+            <div class="gallery-comment" gallery thumb="img/comments/" original="img/comments/" images="item.Image" ></div>
+
+            <div class="comment__text">
+                {{item.Comment.text}}
+            </div>
+            <div class="comment-action m-t-sm">
+
+                <a  ng-show="setup.reply && theme.user.id != item.User.id" ng-click="theme.replyComment( item.Comment.id, item.User )" class="js-forum-reply btn btn-default btn-xs">
+                    <i class="fa fa-mail-reply text-muted"></i>  {{ 'REPLY' | translate }}
+                </a>
+            </div>
+        </div>
+    </section>
+</article>
+
+<div ng-if="item.children" class="comment-reply" >
+    <div ng-repeat="item in item.children"  ng-include="'js/themes/templates/comment.html'" ></div>
+</div>

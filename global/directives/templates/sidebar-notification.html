@@ -1,0 +1,19 @@
+<div>
+    <div class="notifications-aside animated "   ng-class="{'open':open}"   >
+        <section class="comment-body panel panel-default m-n">
+            <header class="panel-heading">
+                <span><i class="fa fa-bell fa-lg"></i> {{ 'NOTIFICATIONS' | translate }} ({{notifications}})</span>
+                <a href="javascript:void(null)"  ng-click="open = false">
+                    <img src="img/icon-close.png" class="pull-right m-b-md" alt="" />
+                </a>
+            </header>
+        </section>
+        <div slim-scroll style="width:100%">
+            <div class="wrapper">
+                <div class="clear"></div>
+                <div ng-transclude></div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-backdrop in" ng-click="open = false" ng-show="open"  ></div>
+</div>

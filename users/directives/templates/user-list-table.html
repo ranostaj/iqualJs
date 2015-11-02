@@ -1,0 +1,89 @@
+<div  >
+
+    <table width="100%" ng-if="ctrl.results"   st-pipe="ctrl.loadData" st-table="ctrl.users"  class="table-bordered table-data theme-table table-striped table table-hover">
+        <tr>
+            <th width="300" translate>USER_NAME</th>
+
+            <th width="300"  class="text-center" translate>USER_EMAIL</th>
+            <th width="200" class="text-center" translate>ROLE</th>
+            <th class="text-center" translate width="120">VIEW_USER</th>
+            <th class="text-center" translate width="120">TOPICS</th>
+            <th class="text-center" translate width="120">CREATED</th>
+
+            <th class="text-center" translate  width="50">REMOVE</th>
+        </tr>
+        <tr>
+            <th><input st-search="'User_name'" class="form-control" placeholder="{{ 'SEARCH_USER_NAME' | translate}}" /></th>
+
+            <th><input st-search="'username'" class="form-control" placeholder="{{ 'SEARCH_USER_EMAIL' | translate}}" /></th>
+            <th>
+                <select st-search="'role_id'" class="form-control">
+                    <option ng-repeat="role in ctrl.roles" value="{{role.Role.id}}">{{role.Role.text| translate}}</option>
+                </select>
+            </th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+
+        </tr>
+        <tbody>
+            <tr ng-repeat="user  in ctrl.users">
+                <td >
+                    <strong>
+                        <div user-image user-data="{{user.User}}"></div>
+                        <a href="javascript:void(null)" view-user-details user-id="{{user.User.id}}" >{{user.User.name}}</a>
+                    </strong>
+                </td >
+
+                <td  class="text-center">{{user.User.username}}</td>
+                <td  class="text-center">{{user.Role.text}}</td>
+                <td class="text-center"><a class="btn btn-success btn-xs" view-user-details user-id="{{user.User.id}}">
+                        <i class="fa fa-info-circle"></i> {{ 'VIEW' | translate }}
+                    </a></td>
+
+                <td class="text-center">
+                    <a href="javascript:void(null)" class="btn btn-info btn-xs"  user-list-themes-modal user-id="{{user.User.id}}" >
+                        <i class="fa fa-flask"></i> {{user.Theme.length}}
+                    </a>
+                </td>
+                <td class="text-center">{{user.User.created}}</td>
+                <td class="text-center">
+                    <a  ng-confirm
+                        ng-confirm-message="{{ 'REALLY_DELETE_USER' | translate }}?"
+                        ng-confirm-description="{{user.User.name}}"
+                        ng-confirm-click="ctrl.deleteRow(user.User.id)"  class="btn  btn-xs    btn-danger ">
+                        <i class="fa fa-trash-o"></i>
+                    </a>
+                </td>
+            </tr>
+        </tbody>
+
+        <tfoot>
+
+            <tr>
+
+                <td colspan="7">
+                    <div class="panel-footer clearfix">
+                        <div class="pull-left m-r-md">
+
+                            <select ng-model="ctrl.onPage">
+                                <option ng-repeat="page in ctrl.pages">{{page}}</option>
+                            </select>
+                        </div>
+
+                        <div class="pull-left text-sm m-t-xs ">
+                            {{ctrl.table.start}} - {{ctrl.table.number}}  of {{ ctrl.table.total}} total
+                        </div>
+                        <div class="pull-left m-l-lg text-center" ng-show="ctrl.isLoading">
+                            <img src="files/svg-loaders/three-dots.svg"   /><strong>Loading data ...</strong>
+                        </div>
+                        <div class="text-right pull-right" st-pagination  st-items-by-page="ctrl.onPage"  ></div>
+
+                    </div>
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+</div>
+

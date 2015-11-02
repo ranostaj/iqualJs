@@ -1,0 +1,146 @@
+
+
+<section class="hbox stretch">
+
+
+
+    <aside class="animated fadeInUp" >
+
+
+        <div class="row">
+            <div  ng-class="{'col-lg-4': home.userCommentReact, 'col-lg-7': !home.userCommentReact}" >
+                <div ng-show="home.project.name">
+                    <h2 class="font-thin m-t-none">{{home.project.name}}</h2>
+                    <div ng-bind-html="home.project.description">
+                    </div>
+                    <div class="line"></div>
+                    <div class="well bg-white well-sm">
+                        <h3 class="font-thin m-t-none"><span class="fa fa-info-circle"></span>
+                            {{ 'CONTACT_DETAILS' | translate }}
+                        </h3>
+                        <ul class="list list-group list-group-lg">
+                            <li> <i class="fa fa-user"></i> {{home.project.uname}}</li>
+                            <li> <i class="fa fa-phone"></i> {{home.project.phone}}</li>
+                            <li> <i class="fa fa-envelope-o"></i>
+                                <a ng-href="mailto:{{home.project.email}}">{{home.project.email}}</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div ng-hide="home.project.name" class="alert alert-warning alert-block">
+                    <h4><i class="fa fa-info"></i> {{ 'NO_PROJECT_ASSIGNED' | translate }}</h4>
+                </div>
+            </div>
+
+
+            <div class="animated fadeInUp"  ng-class="{'col-lg-4': home.userCommentReact, 'col-lg-5': !home.userCommentReact}">
+
+
+                <section class="panel panel-default">
+                    <header class="panel-heading">
+                        <h4 class="m-t-none m-b-none " ><span class="fa fa-flask fa-lg"></span>
+                            {{ 'CURRENT_TOPICS' | translate }}
+
+                            <span class="badge pull-right">{{home.themes.length}}</span>
+                        </h4>
+                    </header>
+                    <section class="panel-body">
+
+                        <div ng-if="!home.themes" class="alert alert-warning alert-block">
+                            <h4><i class="fa fa-info"></i>  {{ 'NO_TOPICS' | translate }}!</h4>
+                            <p>{{ 'NO_TOPICS_ASSIGNED' | translate }}</p>
+                        </div>
+
+                        <div ng-if="home.themes" ng-repeat="theme in home.themes track by $index">
+                            <article class="media">
+
+                                <div class="media-body">
+                                    <div class="pull-left">
+                                        <h4 class="m-t-none">
+                                            <span class="fa fa-flask"></span>
+                                            {{theme.Theme.name}}
+                                        </h4>
+
+                                        <span class="text-muted font-thin small">
+                                            <i class="fa fa-calendar"></i>
+                                            {{theme.Theme.created}}
+                                        </span>
+                                    </div>
+
+                                    <a  ui-sref="theme.view({id:theme.Theme.id})"
+                                        class="btn btn-primary btn-sm pull-right">
+                                        {{ 'ENTER_TOPIC' | translate }}  <i class="fa fa-angle-right"></i>
+
+                                    </a>
+
+                                </div>
+                            </article>
+                            <div class="line pull-in"  ng-show="($index + 1) != home.themes.length"></div>
+                        </div>
+
+                    </section>
+                </section>
+
+
+                <section class="panel panel-default">
+                    <header class="panel-heading">
+
+                        <h4 class="m-t-none m-b-none" ><span class="fa fa-comment-o fa-lg"></span>  {{ 'YOUR_LAST_COMMENTS' | translate }}
+                            <span class="badge pull-right">{{home.comments.length}}</span>
+                        </h4>
+                    </header>
+
+                    <section class="panel-body">
+
+                        <div ng-hide="home.comments" class="alert alert-warning alert-block">
+                            <h4><i class="fa fa-info"></i>  {{ 'NO_COMMENTS' | translate }}!</h4>
+                            <p> {{ 'NO_COMMENTS_YET' | translate }}</p>
+                        </div>
+
+                        <article ng-show="home.comments" class="media"  ng-repeat="comment in home.comments track by $index">
+
+
+                            <div class="media-body">
+                                <div class="pull-right media-xs text-center text-muted">
+                                    <i class="fa fa-clock-o"></i> <span   time-ago from-time="{{comment.Comment.created}}"></span><br>
+                                </div>
+                                <span class="fa fa-flask"></span> {{comment.Theme.name}}
+                                <small class="block m-t-sm">{{comment.Comment.text}}</small>
+                            </div>
+                            <div class="line pull-in" ng-show="($index + 1) != home.comments.length"></div>
+                        </article>
+                    </section>
+                </section>
+
+            </div>
+
+
+
+            <div class="col-lg-4  animated fixed bounceInLeft" ng-show="home.userCommentReact" >
+
+                <section class="panel panel-default">
+                    <header class="panel-heading clearfix">
+                        <h4 class="m-t-none m-b-none" ><i class="fa fa-comments fa-lg"></i>{{ 'NOTIFICATIONS' | translate }}
+                            <span class="badge  pull-right">{{home.userCommentReact}}</span>
+                        </h4>
+
+                    </header>
+                    <section class="panel-body">
+                        <user-comment-react></user-comment-react>
+                    </section>
+                </section>
+
+
+
+
+            </div>
+
+        </div>
+
+    </aside>
+
+
+
+
+</section>

@@ -1,0 +1,161 @@
+
+<div class="modal-header p-0"
+     ng-class="{
+             'panel - danger'
+             :  ctrl.user.Role.name === 'admin',
+                     'panel - info'
+                     :    ctrl.user.Role.name === 'user',
+                     'panel-success'
+                     : ctrl.user.Role.name === 'client'}">
+    <div class="panel-heading clearfix">
+        <h3 class="modal-title">
+            <span class="pull-left"><div user-image user-data="{{ctrl.user.User}}"  width="40"></div></span>
+            <span class="pull-left m-l-md">
+                {{ctrl.user.User.name}}
+
+                <small class="text-muted block">{{ctrl.user.Role.name}}</small>
+            </span>
+            <span class="pull-right text-muted">ID: {{ctrl.user.User.id}}</span>
+        </h3>
+    </div>
+</div>
+<div class="modal-body">
+    <tabset>
+        <tab select="selectTab('info')" >
+            <tab-heading>
+                <i class='fa fa-cog'></i>   {{ 'BASIC_INFO' | translate }}
+            </tab-heading>
+            <section class="panel panel-default m-t-md">
+
+                <div class="list-group no-radius alt">
+                    <div class="list-group-item" >
+                        <div class="row">
+                            <div class="col-sm-7">
+                                <i class="fa fa-comment icon-muted"></i>
+                                {{ 'FULL_NAME' | translate }}
+                            </div>
+                            <div class="col-sm-5">
+                                <div class="form-group">
+                                    <div class="text-right" ng-if="!ctrl.edit_name" ng-click="ctrl.edit_name = true">
+                                        <a style="border-bottom:dashed 1px #428bca" href="javascript:void(null)">{{ctrl.user.User.name}}</a>
+                                    </div>
+
+                                    <div ng-if="ctrl.edit_name" ng-blur="ctrl.edit_name = false" >
+                                        <input type="text"
+                                               ng-if="ctrl.edit_name"
+                                               focus-on
+                                               class=" col-sm-8 p-5 animated fadeInRight"
+                                               ng-model="ctrl.user.User.name" />
+                                        <button   ng-click="ctrl.saveUser();
+                                            ctrl.edit_name = false"  class="btn  col-sm-2 animated fadeInRight btn-sm btn-success">Ulož</button>
+                                        <button   ng-click="ctrl.edit_name = false"  class="btn  col-sm-2 animated fadeInRight btn-sm btn-danger">X</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="list-group-item" >
+                        <div class="row">
+                            <div class="col-sm-7">
+                                <i class="fa fa-envelope icon-muted"></i>
+                                E-mail
+                            </div>
+                            <div class="col-sm-5">
+                                <div class="form-group">
+                                    <div class="text-right"  ng-if="!ctrl.edit_username" ng-click="ctrl.edit_username = true">
+                                        <a style="border-bottom:dashed 1px #428bca" href="javascript:void(null)">{{ctrl.user.User.username}}</a>
+                                    </div>
+
+                                    <div ng-if="ctrl.edit_username"   >
+                                        <input type="text"
+                                               ng-if="ctrl.edit_username"
+                                               focus-on
+                                               class=" col-sm-8 p-5 animated fadeInRight"
+                                               ng-model="ctrl.user.User.username" />
+                                        <button   ng-click="ctrl.saveUser( 'username' );
+                                            ctrl.edit_username = false"  class="btn  col-sm-2 animated fadeInRight btn-sm btn-success">Ulož</button>
+                                        <button   ng-click="ctrl.edit_username = false"  class="btn  col-sm-2 animated fadeInRight btn-sm btn-danger">X</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="list-group-item" ng-if="ctrl.user.Role.name === 'user'" >
+                        <span class="badge bg-light">{{ctrl.user.User.comments}}</span>
+                        <i class="fa fa-comments-o icon-muted"></i>
+                        {{ 'COMMENTS' | translate }}
+                    </div>
+                </div>
+            </section>
+        </tab>
+
+        <tab select="selectTab('users')">
+            <tab-heading>
+                <i class="fa fa-user"></i>  {{ 'PROJECTS' | translate }}  ({{ctrl.user.Project.length}})
+            </tab-heading>
+            <div class="m-t-md" ng-if="ctrl.user.Project.length">
+                <div slim-scroll="{height: '300px'}" project-list-table filter="{user_id:{{ctrl.user.User.id}} }" ></div>
+            </div>
+        </tab>
+        <tab select="selectTab('themes')" >
+            <tab-heading>
+                <i class='fa fa-flask'></i> {{ 'TOPICS' | translate }}  ({{ctrl.user.Theme.length}})
+            </tab-heading>
+            <div class="m-t-md" ng-if="ctrl.user.Theme.length">
+                <div  user-list-themes  user-id="{{ctrl.user.User.id}}" ></div>
+            </div>
+        </tab>
+
+        <tab select="selectTab('responses')" ng-if="ctrl.user.Role.name === 'user' && ctrl.user.User.comments" >
+            <tab-heading>
+                <i class='fa fa-comments-o'></i> {{ 'COMMENTS' | translate }}
+            </tab-heading>
+            <div class="m-t-md">
+                <div class="row m-b-md">
+                    <div class="col-sm-12">
+
+                        <h4><i class="fa fa-flask"></i> Vyberte temu</h4>
+                        <select ui-select2 required
+                                class="select2"
+                                ng-change="ctrl.changeTheme()"
+                                style="width:100%"
+                                ng-model="ctrl.theme_id"
+                                >
+                            <option ng-repeat="theme in ctrl.user.Theme" value="{{theme.id}}">
+                                {{theme.name}}
+                            </option>
+                        </select>
+
+                    </div>
+                </div>
+
+                <div class="row animated fadeInUp" ng-if="ctrl.comments">
+                    <div class="col-sm-12 " >
+
+                        <h4><i class="fa fa-comments-o"></i>  Odpovede respondenta</h4>
+                        <hr />
+                        <div class="m-b-md" slim-scroll="{height:'400px'}">
+                            <user-comments comments="ctrl.comments"    ></user-comments>
+                        </div>
+                    </div>
+
+
+                </div>
+
+                <div class="alert alert-warning m-t-md" ng-if="ctrl.comments.length == 0 && ctrl.theme_id">
+                    <p><i class="fa fa-warning"></i> Neboli nájdené žiadne príspevky k tejto téme</p>
+                </div>
+
+            </div>
+        </tab>
+
+    </tabset>
+
+</div>
+<div class="modal-footer">
+    <button class="btn btn-danger" ng-click="cancel()"><i class="fa fa-times"></i>  {{ 'CLOSE' | translate }} </button>
+</div>
+
+
