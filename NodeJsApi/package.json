@@ -1,0 +1,29 @@
+{
+  "name": "iQualAPI",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "supervisor  app.js"
+  },
+  "dependencies": {
+    "body-parser": "~1.13.2",
+    "debug": "~2.2.0",
+    "ejs": "~2.3.3",
+    "express": "~4.13.1",
+    "morgan": "~1.6.1",
+    "serve-favicon": "~2.3.0",
+    "mysql": "~2.10.0",
+    "jsonwebtoken": "~5.5.4",
+    "underscore": "~1.8.3",
+    "knex": "~0.9.0",
+    "bookshelf": "~0.9.1",
+    "require-dir": "~0.3.0",
+    "change-case": "~2.3.1",
+    "lodash": "~4.5.0",
+    "bluebird": "~3.3.1"
+  },
+  "devDependencies": {
+    "forever": "~0.15.1",
+    "supervisor": "^0.9.1"
+  }
+}

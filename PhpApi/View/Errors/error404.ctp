@@ -1,0 +1,1 @@
+<strong><?php echo __d('cake', 'Error'); ?>: </strong>
