@@ -8,8 +8,9 @@ var mysql = require('../config/mysql');
 var Bookshelf = require('bookshelf')(mysql);
 var crypto = require('crypto');
 var config = require('../config/env');
-var _ = require("lodash");
 var ProjectValidator = require("../validators/projectValid");
+var AppModel = require("./appModel");
+
 
 var ProjectModel = Bookshelf.Model.extend({
 

@@ -23,6 +23,12 @@ var commentsRouter = function commentsRouter(router) {
         .put(CommentsCtrl.update)
         // Delete Comment
         .delete(CommentsCtrl.remove);
+
+    router
+        .route('/upload/:comment_id')
+        // Upload file
+        .post(CommentsCtrl.upload)
+        .get(CommentsCtrl.resize);
 };
 
 module.exports = commentsRouter;
